@@ -3,9 +3,9 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "yy.tab.h"
-    void incrementInputLenght();
+    void moveCursor();
     void verifyParenthesisCount();
-    int totalLength = 0;
+    int cursor = 0;
     int parenthesis = 0;
 %}
 number [0-9]+(\.[0-9]+)?
@@ -15,28 +15,25 @@ end-of-input (\n|EOF)
 %%
  /* error handling */
 {operator}{operator}|{operator}")" { 
-    incrementInputLenght();
-    printf("Error: number expected at position = %d\n",totalLength); exit(0);
+    moveCursor();
+    printf("Error: number expected at position = %d\n",cursor); exit(0);
 }
 
-"("({number})")" {
-    incrementInputLenght();
-    printf("Error: number expected at posifkkftion = %d\n",totalLength); exit(0);
+"("[^0-9\-] {
+    if(yytext[0] != '-'){
+        moveCursor();
+        printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
+    }
 }
-
- /*"("[^(\-{number})] {
-    incrementInputLenght();
-    printf("Error: number or unay minus expected at position = %d\n",totalLength); exit(0);
- }*/
 
 (")"{number}|{number}"("|{number}{spaces}+{number}) {
-    incrementInputLenght();
-    printf("Error: operator expected at position = %d\n",totalLength); exit(0);
+    moveCursor();
+    printf("Error: operator expected at position = %d\n",cursor); exit(0);
 }
 
  /* start */
 {number} {
-    incrementInputLenght();
+    moveCursor();
     double number;
     sscanf(yytext, "%lf", &number);
     yylval.number = number;
@@ -45,52 +42,52 @@ end-of-input (\n|EOF)
 
  /* escaping spaces */
 {spaces} { 
-    incrementInputLenght(); 
+    moveCursor(); 
 }
 
  /* handling parenthesis */
 "(" { 
-    incrementInputLenght(); 
+    moveCursor(); 
     parenthesis++; 
     return yytext[0]; 
 }
 
  /* improve error here */
 ")" { 
-    incrementInputLenght(); 
+    moveCursor(); 
     parenthesis--;
     return yytext[0]; 
 }
 
  /* must detect if input is a file or cmd input */
 {end-of-input} { 
-    incrementInputLenght();
+    moveCursor();
     verifyParenthesisCount();
     return EOI;
 }
 
 {operator} {
-    incrementInputLenght(); 
+    moveCursor(); 
     return yytext[0]; 
 }
 
 .  { 
-    incrementInputLenght(); 
-    printf("Error: expected operator,number or parenthesis at position = %d\n",totalLength);
+    moveCursor(); 
+    printf("Error: expected operator,number or parenthesis at position = %d\n",cursor);
     exit(0);
 }
 %%
 
-void incrementInputLenght(){
-    totalLength += yyleng;
+void moveCursor(){
+    cursor += yyleng;
 }
 
 void verifyParenthesisCount(){
     if(parenthesis != 0){
         if(parenthesis > 0){
-            printf("Error: closing parenthesis expected at position = %d\n",totalLength);
+            printf("Error: closing parenthesis expected at position = %d\n",cursor);
         }else{
-            printf("Error: openning parenthesis expected at position = %d before the closing one \n",totalLength-1);
+            printf("Error: openning parenthesis expected at position = %d before the closing one \n",cursor-1);
         }
         exit(0);
     }
