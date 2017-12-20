@@ -1,42 +1,41 @@
 %{
-    #include <string.h>
     #include <stdio.h>
     #include <stdlib.h>
     #include "yy.tab.h"
     void moveCursor();
+    void printCursor();
+    void moveAndPrintCursor();
     void verifyParenthesisCount();
     int cursor = 0;
     int parenthesis = 0;
 %}
 number [0-9]+(\.[0-9]+)?
-spaces [ \t]+
+spaces [ \t\r]+
 operator [\+\-*/^]
 end-of-input (\n|EOF)
 %%
  /* error handling */
-{operator}{operator}|{operator}")" { 
-    moveCursor();
+{operator}{operator}|{operator}")"|{operator}{end-of-input} { 
+    moveAndPrintCursor();
     printf("Error: number expected at position = %d\n",cursor); exit(0);
 }
 
 "("[^0-9\-] {
     if(yytext[0] != '-'){
-        moveCursor();
+        moveAndPrintCursor();
         printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
     }
 }
 
 (")"{number}|{number}"("|{number}{spaces}+{number}) {
-    moveCursor();
+    moveAndPrintCursor();
     printf("Error: operator expected at position = %d\n",cursor); exit(0);
 }
 
  /* start */
 {number} {
     moveCursor();
-    double number;
-    sscanf(yytext, "%lf", &number);
-    yylval.number = number;
+    yylval.number = atof(yytext);
     return NUMBER;
 }
 
@@ -72,7 +71,7 @@ end-of-input (\n|EOF)
 }
 
 .  { 
-    moveCursor(); 
+    moveAndPrintCursor();
     printf("Error: expected operator,number or parenthesis at position = %d\n",cursor);
     exit(0);
 }
@@ -82,8 +81,18 @@ void moveCursor(){
     cursor += yyleng;
 }
 
+void printCursor(){
+    printf("%*c^\n",cursor-1,' ');
+}
+
+void moveAndPrintCursor(){
+    moveCursor();
+    printCursor();
+}
+
 void verifyParenthesisCount(){
     if(parenthesis != 0){
+        printCursor();
         if(parenthesis > 0){
             printf("Error: closing parenthesis expected at position = %d\n",cursor);
         }else{

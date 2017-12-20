@@ -67,9 +67,14 @@
     #include <stdlib.h>
     #include <stdio.h>
     #include <math.h>
+    // extern function
     extern void verifyParenthesisCount();
+    extern int cursor;
+    
+    // global function
+    void printDivisionError();
 
-#line 73 "./bin/yy.tab.c" /* yacc.c:339  */
+#line 78 "./bin/yy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -119,10 +124,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 7 "./src/yacc.y" /* yacc.c:355  */
+#line 12 "./src/yacc.y" /* yacc.c:355  */
 double number;
 
-#line 126 "./bin/yy.tab.c" /* yacc.c:355  */
+#line 131 "./bin/yy.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -137,7 +142,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 141 "./bin/yy.tab.c" /* yacc.c:358  */
+#line 146 "./bin/yy.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -435,8 +440,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    16,    16,    18,    19,    20,    21,    22,    23,    24,
-      25
+       0,    21,    21,    23,    24,    25,    26,    30,    31,    32,
+      33
 };
 #endif
 
@@ -1215,55 +1220,58 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 16 "./src/yacc.y" /* yacc.c:1646  */
+#line 21 "./src/yacc.y" /* yacc.c:1646  */
     { printf("%lf \n", (yyvsp[-1].number)); exit(0);}
-#line 1221 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1226 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 18 "./src/yacc.y" /* yacc.c:1646  */
+#line 23 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) - (yyvsp[0].number); }
-#line 1227 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1232 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 19 "./src/yacc.y" /* yacc.c:1646  */
+#line 24 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) + (yyvsp[0].number); }
-#line 1233 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1238 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 20 "./src/yacc.y" /* yacc.c:1646  */
+#line 25 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) * (yyvsp[0].number); }
-#line 1239 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1244 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 21 "./src/yacc.y" /* yacc.c:1646  */
-    { (yyval.number) = (yyvsp[-2].number) / (yyvsp[0].number); }
-#line 1245 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 26 "./src/yacc.y" /* yacc.c:1646  */
+    { 
+        if((yyvsp[0].number) == 0) printDivisionError(); /* division by zero */
+        (yyval.number) = (yyvsp[-2].number) / (yyvsp[0].number);
+     }
+#line 1253 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 22 "./src/yacc.y" /* yacc.c:1646  */
+#line 30 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = pow((yyvsp[-2].number), (yyvsp[0].number)); }
-#line 1251 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1259 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 23 "./src/yacc.y" /* yacc.c:1646  */
+#line 31 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = -(yyvsp[0].number); }
-#line 1257 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1265 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 24 "./src/yacc.y" /* yacc.c:1646  */
+#line 32 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-1].number); }
-#line 1263 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1271 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1267 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1275 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1491,11 +1499,17 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 27 "./src/yacc.y" /* yacc.c:1906  */
+#line 35 "./src/yacc.y" /* yacc.c:1906  */
  
 int main(){
     yyparse();
 }
 yyerror(char *s){
     verifyParenthesisCount();
+}
+
+void printDivisionError(){
+    printf("%*c^\n",cursor-2,' '); 
+    printf("Error: division by zero\n"); 
+    exit(0);
 }
