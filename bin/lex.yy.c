@@ -774,15 +774,13 @@ case 2:
 YY_RULE_SETUP
 #line 23 "./src/lex.l"
 {
-    if(yytext[0] != '-'){
-        moveAndPrintCursor();
-        printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
-    }
+    moveAndPrintCursor();
+    printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 30 "./src/lex.l"
+#line 28 "./src/lex.l"
 {
     moveAndPrintCursor();
     printf("Error: operator expected at position = %d\n",cursor); exit(0);
@@ -791,7 +789,7 @@ YY_RULE_SETUP
 /* start */
 case 4:
 YY_RULE_SETUP
-#line 36 "./src/lex.l"
+#line 34 "./src/lex.l"
 {
     moveCursor();
     yylval.number = atof(yytext);
@@ -801,7 +799,7 @@ YY_RULE_SETUP
 /* escaping spaces */
 case 5:
 YY_RULE_SETUP
-#line 43 "./src/lex.l"
+#line 41 "./src/lex.l"
 { 
     moveCursor(); 
 }
@@ -809,7 +807,7 @@ YY_RULE_SETUP
 /* handling parenthesis */
 case 6:
 YY_RULE_SETUP
-#line 48 "./src/lex.l"
+#line 46 "./src/lex.l"
 { 
     moveCursor(); 
     parenthesis++; 
@@ -819,7 +817,7 @@ YY_RULE_SETUP
 /* improve error here */
 case 7:
 YY_RULE_SETUP
-#line 55 "./src/lex.l"
+#line 53 "./src/lex.l"
 { 
     moveCursor(); 
     parenthesis--;
@@ -830,7 +828,7 @@ YY_RULE_SETUP
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 62 "./src/lex.l"
+#line 60 "./src/lex.l"
 { 
     moveCursor();
     verifyParenthesisCount();
@@ -839,7 +837,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 68 "./src/lex.l"
+#line 66 "./src/lex.l"
 {
     moveCursor(); 
     return yytext[0]; 
@@ -847,7 +845,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 73 "./src/lex.l"
+#line 71 "./src/lex.l"
 { 
     moveAndPrintCursor();
     printf("Error: expected operator,number or parenthesis at position = %d\n",cursor);
@@ -856,10 +854,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 78 "./src/lex.l"
+#line 76 "./src/lex.l"
 ECHO;
 	YY_BREAK
-#line 863 "./bin/lex.yy.c"
+#line 861 "./bin/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1857,7 +1855,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "./src/lex.l"
+#line 76 "./src/lex.l"
 
 
 

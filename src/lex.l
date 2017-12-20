@@ -21,10 +21,8 @@ end-of-input (\n|EOF)
 }
 
 "("[^0-9\-] {
-    if(yytext[0] != '-'){
-        moveAndPrintCursor();
-        printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
-    }
+    moveAndPrintCursor();
+    printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
 }
 
 (")"{number}|{number}"("|{number}{spaces}+{number}) {
