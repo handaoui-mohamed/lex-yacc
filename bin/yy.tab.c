@@ -67,8 +67,9 @@
     #include <stdlib.h>
     #include <stdio.h>
     #include <math.h>
+    extern void verifyParenthesisCount();
 
-#line 72 "./bin/yy.tab.c" /* yacc.c:339  */
+#line 73 "./bin/yy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -118,10 +119,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 6 "./src/yacc.y" /* yacc.c:355  */
+#line 7 "./src/yacc.y" /* yacc.c:355  */
 double number;
 
-#line 125 "./bin/yy.tab.c" /* yacc.c:355  */
+#line 126 "./bin/yy.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -136,7 +137,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 140 "./bin/yy.tab.c" /* yacc.c:358  */
+#line 141 "./bin/yy.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -434,8 +435,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    15,    15,    17,    18,    19,    20,    21,    22,    23,
-      24
+       0,    16,    16,    18,    19,    20,    21,    22,    23,    24,
+      25
 };
 #endif
 
@@ -445,7 +446,7 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "NUMBER", "EOI", "'-'", "'+'", "'*'",
-  "'/'", "'^'", "unary_minus", "'('", "')'", "$accept", "Ligne", "Expr", YY_NULLPTR
+  "'/'", "'^'", "unary_minus", "'('", "')'", "$accept", "Line", "Expr", YY_NULLPTR
 };
 #endif
 
@@ -1214,55 +1215,55 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 15 "./src/yacc.y" /* yacc.c:1646  */
+#line 16 "./src/yacc.y" /* yacc.c:1646  */
     { printf("%lf \n", (yyvsp[-1].number)); exit(0);}
-#line 1220 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1221 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 17 "./src/yacc.y" /* yacc.c:1646  */
+#line 18 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) - (yyvsp[0].number); }
-#line 1226 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1227 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 18 "./src/yacc.y" /* yacc.c:1646  */
+#line 19 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) + (yyvsp[0].number); }
-#line 1232 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1233 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 19 "./src/yacc.y" /* yacc.c:1646  */
+#line 20 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) * (yyvsp[0].number); }
-#line 1238 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1239 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 20 "./src/yacc.y" /* yacc.c:1646  */
+#line 21 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-2].number) / (yyvsp[0].number); }
-#line 1244 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1245 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 21 "./src/yacc.y" /* yacc.c:1646  */
+#line 22 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = pow((yyvsp[-2].number), (yyvsp[0].number)); }
-#line 1250 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1251 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 22 "./src/yacc.y" /* yacc.c:1646  */
+#line 23 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = -(yyvsp[0].number); }
-#line 1256 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1257 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 23 "./src/yacc.y" /* yacc.c:1646  */
+#line 24 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = (yyvsp[-1].number); }
-#line 1262 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1263 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1266 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1267 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1490,11 +1491,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 26 "./src/yacc.y" /* yacc.c:1906  */
+#line 27 "./src/yacc.y" /* yacc.c:1906  */
  
 int main(){
     yyparse();
 }
 yyerror(char *s){
-    // printf("\nErreur:\n%s\n",s);
+    verifyParenthesisCount();
 }

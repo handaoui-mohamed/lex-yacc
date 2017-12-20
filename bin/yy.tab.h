@@ -60,7 +60,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 6 "./src/yacc.y" /* yacc.c:1909  */
+#line 7 "./src/yacc.y" /* yacc.c:1909  */
 double number;
 
 #line 67 "./bin/yy.tab.h" /* yacc.c:1909  */

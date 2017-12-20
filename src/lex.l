@@ -24,12 +24,12 @@ end-of-input (\n|EOF)
     printf("Error: number expected at posifkkftion = %d\n",totalLength); exit(0);
 }
 
-"("[^(\-|{number})] {
+ /*"("[^(\-{number})] {
     incrementInputLenght();
     printf("Error: number or unay minus expected at position = %d\n",totalLength); exit(0);
-}
+ }*/
 
-(")"{number}|{number}"(") {
+(")"{number}|{number}"("|{number}{spaces}+{number}) {
     incrementInputLenght();
     printf("Error: operator expected at position = %d\n",totalLength); exit(0);
 }
@@ -55,10 +55,10 @@ end-of-input (\n|EOF)
     return yytext[0]; 
 }
 
+ /* improve error here */
 ")" { 
     incrementInputLenght(); 
-    parenthesis--; 
-    verifyParenthesisCount();
+    parenthesis--;
     return yytext[0]; 
 }
 
@@ -76,7 +76,7 @@ end-of-input (\n|EOF)
 
 .  { 
     incrementInputLenght(); 
-    printf("Error: expected operand,number or parenthesis at position = %d\n",totalLength);
+    printf("Error: expected operator,number or parenthesis at position = %d\n",totalLength);
     exit(0);
 }
 %%
