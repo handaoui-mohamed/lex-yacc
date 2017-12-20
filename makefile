@@ -9,7 +9,7 @@ yacc:
 	bison -o ./bin/yy.tab.c -dy ./src/yacc.y
 
 prog:
-	gcc -o prog ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll
+	gcc -o prog ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
 
 clean-binaries:
 	touch ./bin/temp
