@@ -15,16 +15,31 @@ operator [\+\-*/^]
 end-of-input (\n|EOF)
 %%
  /* error handling */
+
+ /* examples
+ * {operator}{operator}         => 5+6++
+ * {operator}")"                => 5+(8*3+)
+ * {operator}{end-of-input}     => 5+6-
+ */
 {operator}{operator}|{operator}")"|{operator}{end-of-input} { 
     moveAndPrintCursor();
     printf("Error: number expected at position = %d\n",cursor); exit(0);
 }
 
+ /* examples
+ * Only (-5) or (5) are accepted
+ * (+5), (*5) ... are not accepted
+ */
 "("[^0-9\-] {
     moveAndPrintCursor();
     printf("Error: number or unay minus expected at position = %d\n",cursor); exit(0);
 }
 
+ /* examples
+ * ")"{number}                   => (5+6)5
+ * {number}"("                   => 1+2(5+6)
+ * {number}{spaces}+{number}     => 5+6   2
+ */
 (")"{number}|{number}"("|{number}{spaces}+{number}) {
     moveAndPrintCursor();
     printf("Error: operator expected at position = %d\n",cursor); exit(0);
