@@ -115,8 +115,8 @@ int main(int nbInputs,char **inputs){
     extern FILE *yyin;
     
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
-        printf("To parse file add -f <filename>\n");
-        printf("To parse cmd inputs execute with no params\n");
+        help();
+        exit(0);
     }
 
     if(nbInputs == 3 && strcmp(inputs[2], "-f")){

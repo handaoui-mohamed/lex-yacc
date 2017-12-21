@@ -5,7 +5,7 @@ typedef struct node
     struct node *next;
 } node;
 
-double getNextValue(node **p);
+double getNextValue(node **p, int destroy);
 void addNext(node **p, double value);
 void allocate(node **p);
 void setValue(node *p, double value);
@@ -20,3 +20,5 @@ double variance(node *list);
 double standardDeviation(node *list);
 double min(node *list);
 double max(node *list);
+
+void help();
