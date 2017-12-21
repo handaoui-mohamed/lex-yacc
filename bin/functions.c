@@ -27,7 +27,6 @@ double getNextValue(node **p)
         newNode = (*p)->next;
         free(*p);
         *p = newNode;
-        printf("new value = %lf\n", newNode->value);
         return newNode->value;
     }
     return 0;
@@ -41,7 +40,6 @@ void addNext(node **p, double value)
     if (*p != NULL)
         setNext(*p, new);
     *p = new;
-    printf("new value = %lf\n", (*p)->value);
 }
 
 int hasNext(node *p)

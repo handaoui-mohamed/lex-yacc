@@ -459,7 +459,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    47,    47,    48,    51,    52,    55,    56,    57,    58,
       59,    63,    64,    65,    66,    69,    70,    71,    72,    73,
-      74,    75,    76,    77,    80,    91,    94,   103
+      74,    75,    76,    77,    80,    91,    94,   102
 };
 #endif
 
@@ -1431,28 +1431,27 @@ yyreduce:
         (yyval.list).current = (yyvsp[-2].list).current;
         (yyval.list).size = (yyvsp[-2].list).size;
         
-        printf("3\n");
         addNext(&((yyval.list).current), (yyvsp[0].number));
         (yyval.list).size++;
     }
-#line 1439 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1438 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 103 "./src/yacc.y" /* yacc.c:1646  */
+#line 102 "./src/yacc.y" /* yacc.c:1646  */
     {
-        printf("1\n");
+        (yyval.list).params = NULL;
+        (yyval.list).current = NULL;
         allocate(&((yyval.list).params));
-        printf("2\n");
+        (yyval.list).current = (yyval.list).params;
         addNext(&((yyval.list).current), (yyvsp[0].number));
-        (yyval.list).params = (yyval.list).current;
         (yyval.list).size = 1;
     }
-#line 1452 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1451 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1456 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1455 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1680,7 +1679,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 112 "./src/yacc.y" /* yacc.c:1906  */
+#line 111 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;

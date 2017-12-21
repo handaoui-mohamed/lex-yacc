@@ -100,9 +100,11 @@ List: List ',' Expr {
         $$.size++;
     }
     | Expr {
+        $$.params = NULL;
+        $$.current = NULL;
         allocate(&($$.params));
+        $$.current = $$.params;
         addNext(&($$.current), $1);
-        $$.params = $$.current;
         $$.size = 1;
     }
     ;
