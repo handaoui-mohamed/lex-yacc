@@ -4,17 +4,19 @@
     #include <string.h>
     #include <math.h>
     #include "yy.tab.h"
-    #include "errors.string.h"
-    // extern function
+    #include "error.strings.h"
+
+    // extern functions
     extern void verifyParenthesisCount();
     extern void printCursor();
     extern int cursor;
     extern char* yytext;
     extern int yylineno;
     
-    // global functions
     // global variables
     int fileIsOpen = 0;
+    
+    // global functions
 %}
 %union {double number;}
 %token <number> NUMBER EOI
@@ -33,7 +35,7 @@ Line: EOI
     | Expr EOI { printf("%lf \n", $1);}
     ;
 
-Expr: NUMBER 
+Expr: NUMBER        { $$ = $1; }
     | Expr '-' Expr { $$ = $1 - $3; }
     | Expr '+' Expr { $$ = $1 + $3; }
     | Expr '*' Expr { $$ = $1 * $3; }
@@ -46,10 +48,9 @@ Expr: NUMBER
     | '(' Expr ')'{ $$ = $2; }
 
     /* errors handling */
-    | '(' error { yyerror(OPERATOR_EXPECTED); }
-    | '(' error ')' { yyerror(OPERATOR_EXPECTED); }
+    | '(' error { yyerror(EXPRESSION_EXPECTED); }
+    | '(' error ')' { yyerror(EXPRESSION_EXPECTED); }
     | '(' Expr error { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
-    | error Expr ')' { yyerror(OPENING_PARENTHESIS_EXPECTED); }
     | Expr error { yyerror(OPERATOR_EXPECTED); }
     | Expr '+' error { yyerror(EXPRESSION_EXPECTED); }
     | Expr '-' error { yyerror(EXPRESSION_EXPECTED); }

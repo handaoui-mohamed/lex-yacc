@@ -2,13 +2,17 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "yy.tab.h"
+
+    // global functions
     void moveCursor();
+
+    // global variables
     int cursor = 0;
 %}
 number -?[0-9]+(\.[0-9]+)?
 spaces [ \t]+
 operator [\+\-*/^]
-end-of-input (\r|\n|EOF)
+end-of-input [\r\nEOF]
 %option yylineno
 %%
  /* start */
@@ -41,7 +45,7 @@ end-of-input (\r|\n|EOF)
 
 . { 
     moveCursor();
-    yyerror("Expression expected");
+    yyerror("Invalid symbol, an arithmetic expression is expected");
 }
 %%
 
