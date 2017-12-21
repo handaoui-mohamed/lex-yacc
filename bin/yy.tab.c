@@ -471,7 +471,7 @@ static const yytype_uint8 yyrline[] =
        0,    47,    47,    48,    51,    52,    55,    56,    57,    58,
       59,    63,    64,    65,    66,    69,    70,    71,    72,    73,
       74,    75,    76,    77,    80,    93,    94,    95,    96,    97,
-      98,    99,   102,   107
+      98,    99,   102,   106
 };
 #endif
 
@@ -1498,24 +1498,23 @@ yyreduce:
 #line 102 "./src/yacc.y" /* yacc.c:1646  */
     { 
         (yyval.list) = (yyvsp[-2].list);
-        
         addNext(&((yyval.list).current), (yyvsp[0].number));
     }
-#line 1505 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1504 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 107 "./src/yacc.y" /* yacc.c:1646  */
+#line 106 "./src/yacc.y" /* yacc.c:1646  */
     {
         allocate(&((yyval.list).params));
         (yyval.list).current = (yyval.list).params;
         addNext(&((yyval.list).current), (yyvsp[0].number));
     }
-#line 1515 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1514 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1519 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1518 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1743,7 +1742,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 113 "./src/yacc.y" /* yacc.c:1906  */
+#line 112 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;

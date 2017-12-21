@@ -108,26 +108,32 @@ double standardDeviation(node *list)
 
 double min(node *list)
 {
-    double result = 0;
-    double nextValue = 0;
-    while (hasNext(list))
+    double result = 0, nextValue;
+    if (hasNext(list))
     {
-        nextValue = getNextValue(&list, 1);
-        if (nextValue < result)
-            result = nextValue;
+        result = getNextValue(&list, 1);
+        while (hasNext(list))
+        {
+            nextValue = getNextValue(&list, 1);
+            if (nextValue < result)
+                result = nextValue;
+        }
     }
     return result;
 }
 
 double max(node *list)
 {
-    double result = 0;
-    double nextValue = 0;
-    while (hasNext(list))
+    double result = 0, nextValue;
+    if (hasNext(list))
     {
-        nextValue = getNextValue(&list, 1);
-        if (nextValue > result)
-            result = nextValue;
+        result = getNextValue(&list, 1);
+        while (hasNext(list))
+        {
+            nextValue = getNextValue(&list, 1);
+            if (nextValue > result)
+                result = nextValue;
+        }
     }
     return result;
 }

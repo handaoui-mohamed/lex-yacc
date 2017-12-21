@@ -50,12 +50,12 @@ end-of-input [\r\nEOF]
 
 "min" {
     moveCursor(); 
-    return STANDARD_DEVIATION;
+    return MIN;
 }
 
 "max" {
     moveCursor(); 
-    return STANDARD_DEVIATION;
+    return MAX;
 }
  /* END: Function names */
 

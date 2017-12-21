@@ -860,7 +860,7 @@ YY_RULE_SETUP
 #line 51 "./src/lex.l"
 {
     moveCursor(); 
-    return STANDARD_DEVIATION;
+    return MIN;
 }
 	YY_BREAK
 case 8:
@@ -868,7 +868,7 @@ YY_RULE_SETUP
 #line 56 "./src/lex.l"
 {
     moveCursor(); 
-    return STANDARD_DEVIATION;
+    return MAX;
 }
 	YY_BREAK
 /* END: Function names */

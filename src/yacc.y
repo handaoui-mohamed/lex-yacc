@@ -101,7 +101,6 @@ Name: AVERAGE {$$ = 1;}
 
 List: List ',' Expr { 
         $$ = $1;
-        
         addNext(&($$.current), $3);
     }
     | Expr {
