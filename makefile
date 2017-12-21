@@ -1,4 +1,4 @@
-default: clean-binaries yacc lex prog clear-screen
+default: clean-binaries prog clear-screen
 
 all: clean-binaries yacc lex prog
 
@@ -8,11 +8,15 @@ lex:
 yacc: error.strings.h
 	bison -o ./bin/yy.tab.c -dy ./src/yacc.y
 
+prog: lex yacc functions
+	gcc -o prog ./bin/functions.c ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
+
+functions:
+	cp ./src/functions.h ./bin/functions.h
+	cp ./src/functions.c ./bin/functions.c
+
 error.strings.h:
 	cp ./src/error.strings.h ./bin/error.strings.h
-
-prog:
-	gcc -o prog ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
 
 clean-binaries:
 	touch ./bin/temp

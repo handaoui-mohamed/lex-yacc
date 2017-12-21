@@ -5,10 +5,9 @@
     #include <math.h>
     #include "yy.tab.h"
     #include "error.strings.h"
+    #include "functions.h"
 
     // extern functions
-    extern void verifyParenthesisCount();
-    extern void printCursor();
     extern int cursor;
     extern char* yytext;
     extern int yylineno;
@@ -20,7 +19,8 @@
 %}
 %union {
     struct list{
-        double *params;
+        struct node *params;
+        struct node *current;
         int size;
     }list;
     double number;
@@ -81,8 +81,8 @@ Function: Name '(' List ')' {
             int i;
             $$ = 0;
             if($1 == 1){
-                for(i=0; i < $3.size; i++){
-                    $$ += $3.params[i];
+                for (i=0; i < $3.size;i++ ){
+                     $$ += getNextValue(&($3.params));
                 }
                 $$ /= $3.size;
             }
@@ -93,17 +93,19 @@ Name: MOY {$$ = 1;}
 
 List: List ',' Expr { 
         $$.params = $1.params;
-        $$.size = $1.size; 
-        $$.params[$$.size++] = $3;
+        $$.current = $1.current;
+        $$.size = $1.size;
+        
+        addNext(&($$.current), $3);
+        $$.size++;
     }
     | Expr {
-        $$.params = malloc(100); 
-        $$.params[0] = $1; 
+        allocate(&($$.params));
+        addNext(&($$.current), $1);
+        $$.params = $$.current;
         $$.size = 1;
     }
     ;
-
-
 %%
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;

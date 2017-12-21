@@ -70,10 +70,9 @@
     #include <math.h>
     #include "yy.tab.h"
     #include "error.strings.h"
+    #include "functions.h"
 
     // extern functions
-    extern void verifyParenthesisCount();
-    extern void printCursor();
     extern int cursor;
     extern char* yytext;
     extern int yylineno;
@@ -83,7 +82,7 @@
     
     // global functions
 
-#line 87 "./bin/yy.tab.c" /* yacc.c:339  */
+#line 86 "./bin/yy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -135,10 +134,11 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 21 "./src/yacc.y" /* yacc.c:355  */
+#line 20 "./src/yacc.y" /* yacc.c:355  */
 
     struct list{
-        double *params;
+        struct node *params;
+        struct node *current;
         int size;
     }list;
     double number;
@@ -459,7 +459,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    47,    47,    48,    51,    52,    55,    56,    57,    58,
       59,    63,    64,    65,    66,    69,    70,    71,    72,    73,
-      74,    75,    76,    77,    80,    91,    94,    99
+      74,    75,    76,    77,    80,    91,    94,   103
 };
 #endif
 
@@ -1409,8 +1409,8 @@ yyreduce:
             int i;
             (yyval.number) = 0;
             if((yyvsp[-3].function) == 1){
-                for(i=0; i < (yyvsp[-1].list).size; i++){
-                    (yyval.number) += (yyvsp[-1].list).params[i];
+                for (i=0; i < (yyvsp[-1].list).size;i++ ){
+                     (yyval.number) += getNextValue(&((yyvsp[-1].list).params));
                 }
                 (yyval.number) /= (yyvsp[-1].list).size;
             }
@@ -1428,24 +1428,31 @@ yyreduce:
 #line 94 "./src/yacc.y" /* yacc.c:1646  */
     { 
         (yyval.list).params = (yyvsp[-2].list).params;
-        (yyval.list).size = (yyvsp[-2].list).size; 
-        (yyval.list).params[(yyval.list).size++] = (yyvsp[0].number);
+        (yyval.list).current = (yyvsp[-2].list).current;
+        (yyval.list).size = (yyvsp[-2].list).size;
+        
+        printf("3\n");
+        addNext(&((yyval.list).current), (yyvsp[0].number));
+        (yyval.list).size++;
     }
-#line 1435 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1439 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 99 "./src/yacc.y" /* yacc.c:1646  */
+#line 103 "./src/yacc.y" /* yacc.c:1646  */
     {
-        (yyval.list).params = malloc(100); 
-        (yyval.list).params[0] = (yyvsp[0].number); 
+        printf("1\n");
+        allocate(&((yyval.list).params));
+        printf("2\n");
+        addNext(&((yyval.list).current), (yyvsp[0].number));
+        (yyval.list).params = (yyval.list).current;
         (yyval.list).size = 1;
     }
-#line 1445 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1452 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1449 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1456 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1673,7 +1680,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 107 "./src/yacc.y" /* yacc.c:1906  */
+#line 112 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;

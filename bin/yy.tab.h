@@ -62,16 +62,17 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 21 "./src/yacc.y" /* yacc.c:1909  */
+#line 20 "./src/yacc.y" /* yacc.c:1909  */
 
     struct list{
-        double *params;
+        struct node *params;
+        struct node *current;
         int size;
     }list;
     double number;
     int function;
 
-#line 75 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 76 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
