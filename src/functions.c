@@ -98,3 +98,29 @@ double standardDeviation(node *list)
 {
     return sqrt(variance(list));
 }
+
+double min(node *list)
+{
+    double result = 0;
+    double nextValue = 0;
+    while (hasNext(list))
+    {
+        nextValue = getNextValue(&list);
+        if (nextValue <= result)
+            result = nextValue;
+    }
+    return result;
+}
+
+double max(node *list)
+{
+    double result = 0;
+    double nextValue = 0;
+    while (hasNext(list))
+    {
+        nextValue = getNextValue(&list);
+        if (nextValue >= result)
+            result = nextValue;
+    }
+    return result;
+}

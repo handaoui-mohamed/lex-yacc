@@ -47,8 +47,18 @@ end-of-input [\r\nEOF]
     moveCursor(); 
     return STANDARD_DEVIATION;
 }
+
+"min" {
+    moveCursor(); 
+    return STANDARD_DEVIATION;
+}
+
+"max" {
+    moveCursor(); 
+    return STANDARD_DEVIATION;
+}
  /* END: Function names */
- 
+
  /* escaping spaces */
 {spaces}+ { 
     moveCursor(); 

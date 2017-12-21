@@ -21,14 +21,14 @@
     struct list{
         struct node *params;
         struct node *current;
-    }list;
+    } list;
     double number;
     int function;
 }
 
 /* Tokens */
 %token <number> NUMBER EOI
-%token <number> AVERAGE SUM PRODUCT VARIANCE STANDARD_DEVIATION
+%token <number> AVERAGE SUM PRODUCT VARIANCE STANDARD_DEVIATION MIN MAX
 
 /* precedency */
 %left '-' '+'
@@ -65,7 +65,7 @@ Expr: NUMBER        { $$ = $1; }
     | '(' Expr ')'{ $$ = $2; }
     | Function { $$  = $1 ; }
 
-    /* errors handling */
+    /* basic arithmetic errors handling */
     | '(' error { yyerror(EXPRESSION_EXPECTED); }
     | '(' error ')' { yyerror(EXPRESSION_EXPECTED); }
     | '(' Expr error { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
@@ -84,6 +84,8 @@ Function: Name '(' List ')' {
                 case 3: $$ = product($3.params); break;
                 case 4: $$ = variance($3.params); break;
                 case 5: $$ = standardDeviation($3.params); break;
+                case 6: $$ = min($3.params); break;
+                case 7: $$ = max($3.params); break;
                 default: break;
             }
         };
@@ -93,6 +95,8 @@ Name: AVERAGE {$$ = 1;}
     | PRODUCT {$$ = 3;}
     | VARIANCE {$$ = 4;}
     | STANDARD_DEVIATION {$$ = 5;}
+    | MIN {$$ = 6;}
+    | MAX {$$ = 7;}
     ;
 
 List: List ',' Expr { 
