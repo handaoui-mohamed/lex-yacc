@@ -9,7 +9,7 @@
     // global variables
     int cursor = 0;
 %}
-number -?[0-9]+(\.[0-9]+)?
+number [0-9]+(\.[0-9]+)?
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
