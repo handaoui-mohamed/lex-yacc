@@ -21,16 +21,16 @@
     struct list{
         struct node *params;
         struct node *current;
-        int size;
     }list;
     double number;
     int function;
 }
 
 /* Tokens */
-%token <number> NUMBER EOI MOY
+%token <number> NUMBER EOI
+%token <number> AVERAGE SUM PRODUCT VARIANCE STANDARD_DEVIATION
 
-/* precedence */
+/* precedency */
 %left '-' '+'
 %left '*' '/'
 %right '^'    
@@ -78,34 +78,32 @@ Expr: NUMBER        { $$ = $1; }
     ;
 
 Function: Name '(' List ')' {
-            int i;
-            $$ = 0;
-            if($1 == 1){
-                for (i=0; i < $3.size;i++ ){
-                     $$ += getNextValue(&($3.params));
-                }
-                $$ /= $3.size;
+            switch($1){
+                case 1: $$ = average($3.params); break;
+                case 2: $$ = sum($3.params); break;
+                case 3: $$ = product($3.params); break;
+                case 4: $$ = variance($3.params); break;
+                case 5: $$ = standardDeviation($3.params); break;
+                default: break;
             }
         };
 
-Name: MOY {$$ = 1;}
+Name: AVERAGE {$$ = 1;}
+    | SUM {$$ = 2;}
+    | PRODUCT {$$ = 3;}
+    | VARIANCE {$$ = 4;}
+    | STANDARD_DEVIATION {$$ = 5;}
     ;
 
 List: List ',' Expr { 
-        $$.params = $1.params;
-        $$.current = $1.current;
-        $$.size = $1.size;
+        $$ = $1;
         
         addNext(&($$.current), $3);
-        $$.size++;
     }
     | Expr {
-        $$.params = NULL;
-        $$.current = NULL;
         allocate(&($$.params));
         $$.current = $$.params;
         addNext(&($$.current), $1);
-        $$.size = 1;
     }
     ;
 %%

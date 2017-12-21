@@ -47,15 +47,23 @@ extern int yydebug;
   {
     NUMBER = 258,
     EOI = 259,
-    MOY = 260,
-    unary_minus = 261
+    AVERAGE = 260,
+    SUM = 261,
+    PRODUCT = 262,
+    VARIANCE = 263,
+    STANDARD_DEVIATION = 264,
+    unary_minus = 265
   };
 #endif
 /* Tokens.  */
 #define NUMBER 258
 #define EOI 259
-#define MOY 260
-#define unary_minus 261
+#define AVERAGE 260
+#define SUM 261
+#define PRODUCT 262
+#define VARIANCE 263
+#define STANDARD_DEVIATION 264
+#define unary_minus 265
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -67,12 +75,11 @@ union YYSTYPE
     struct list{
         struct node *params;
         struct node *current;
-        int size;
     }list;
     double number;
     int function;
 
-#line 76 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 83 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

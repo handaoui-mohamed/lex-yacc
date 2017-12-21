@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "functions.h"
 
 void allocate(node **p)
@@ -9,9 +10,9 @@ void allocate(node **p)
     (*p)->value = 0;
 }
 
-void setValue(node *p, double v)
+void setValue(node *p, double value)
 {
-    (p->value = v);
+    p->value = value;
 }
 
 void setNext(node *p, node *next)
@@ -44,10 +45,56 @@ void addNext(node **p, double value)
 
 int hasNext(node *p)
 {
-    return p == NULL ? 0 : 1;
+    return p->next == NULL ? 0 : 1;
 }
 
-double getValue(node *p)
+/* Functions */
+double average(node *list)
 {
-    return p->value;
+    double result = 0;
+    int size = 0;
+    while (hasNext(list))
+    {
+        result += getNextValue(&list);
+        size++;
+    }
+    return result /= size;
+}
+
+double sum(node *list)
+{
+    double result = 0;
+    while (hasNext(list))
+    {
+        result += getNextValue(&list);
+    }
+    return result;
+}
+
+double product(node *list)
+{
+    double result = 0;
+    while (hasNext(list))
+    {
+        result *= getNextValue(&list);
+    }
+    return result;
+}
+
+double variance(node *list)
+{
+    double result = 0;
+    int size = 0;
+    double averageValue = average(list);
+    while (hasNext(list))
+    {
+        result += pow((getNextValue(&list) - averageValue), 2);
+        size++;
+    }
+    return result /= size;
+}
+
+double standardDeviation(node *list)
+{
+    return sqrt(variance(list));
 }

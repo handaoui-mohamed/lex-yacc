@@ -22,11 +22,33 @@ end-of-input [\r\nEOF]
     return NUMBER;
 }
 
+ /* START: Function names */
 "moyenne" {
     moveCursor(); 
-    return MOY;
+    return AVERAGE;
 }
 
+"somme" {
+    moveCursor(); 
+    return SUM;
+}
+
+"produit" {
+    moveCursor(); 
+    return PRODUCT;
+}
+
+"variance" {
+    moveCursor(); 
+    return VARIANCE;
+}
+
+"ecart-type" {
+    moveCursor(); 
+    return STANDARD_DEVIATION;
+}
+ /* END: Function names */
+ 
  /* escaping spaces */
 {spaces}+ { 
     moveCursor(); 
