@@ -7,25 +7,30 @@
     // extern function
     extern void verifyParenthesisCount();
     extern int cursor;
-    extern char *yytext;
+    extern char* yytext;
+    extern int yylineno;
     
     // global function
     void printDivisionError();
 %}
 %union {double number;}
-%token <number> NUMBER
-%token EOI
+%token <number> NUMBER EOI
 %type <number> Expr Line
 %left '-' '+'
 %left '*' '/'
 %right '^'    
 %right unary_minus
+%start Input
 %%
-Line: Expr EOI { printf("%lf \n", $1); }
-    | Line Expr EOI
+Input:
+     | Input Line
+     ;
+Line: EOI
+    | Expr EOI { printf("%lf \n", $1); }
     ;
 
 Expr: Expr '-' Expr { $$ = $1 - $3; }
+    | error '-' { yyerror("expression expected"); }
     | Expr '+' Expr { $$ = $1 + $3; }
     | Expr '*' Expr { $$ = $1 * $3; }
     | Expr '/' Expr { 
@@ -58,9 +63,9 @@ int main(int nbInputs,char **inputs){
     if(fileIsOpen) fclose(yyin);
     return 0;
 }
-int yyerror(char *error){
-    // verifyParenthesisCount();
-    printf("Error: %c\n",yytext[0]);
+
+int yyerror(char *s) {
+  printf("%s on line %d - %s\n", s, yylineno, yytext);
 }
 
 void printDivisionError(){
