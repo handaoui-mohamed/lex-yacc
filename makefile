@@ -6,6 +6,7 @@ lex:
 	flex -o ./bin/lex.yy.c ./src/lex.l
 	
 yacc:
+	cp ./src/errors.string.h ./bin/errors.string.h
 	bison -o ./bin/yy.tab.c -dy ./src/yacc.y
 
 prog:

@@ -382,8 +382,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 8
-#define YY_END_OF_BUFFER 9
+#define YY_NUM_RULES 7
+#define YY_END_OF_BUFFER 8
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -393,22 +393,22 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[20] =
     {   0,
-        0,    0,    9,    7,    2,    5,    3,    4,    6,    6,
-        1,    7,    2,    1,    0,    0,    1,    5,    0
+        0,    0,    8,    6,    2,    4,    4,    3,    5,    5,
+        1,    6,    2,    1,    0,    0,    1,    4,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
-        5,    6,    6,    1,    7,    8,    6,    9,    9,    9,
-        9,    9,    9,    9,    9,    9,    9,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,   10,   11,
-        1,    1,    1,    1,    1,    1,    1,    1,   12,    1,
+        1,    2,    1,    1,    1,    1,    1,    1,    1,    5,
+        6,    7,    7,    1,    8,    9,    7,   10,   10,   10,
+       10,   10,   10,   10,   10,   10,   10,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,   11,   12,
+        1,    1,    1,    1,    1,    1,    1,    1,   13,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    6,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    7,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -429,16 +429,16 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[13] =
+static yyconst flex_int32_t yy_meta[14] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1
+        1,    1,    1
     } ;
 
 static yyconst flex_int16_t yy_base[20] =
     {   0,
-        0,    0,   22,   23,   19,   23,   23,   23,   23,   11,
-        5,    7,   16,    0,    8,    5,    6,   23,   23
+        0,    0,   23,   24,   20,   24,   24,   24,   24,   11,
+        5,    7,   17,    0,    8,    5,    6,   24,   24
     } ;
 
 static yyconst flex_int16_t yy_def[20] =
@@ -447,26 +447,26 @@ static yyconst flex_int16_t yy_def[20] =
        19,   19,   19,   11,   19,   19,   19,   19,    0
     } ;
 
-static yyconst flex_int16_t yy_nxt[36] =
+static yyconst flex_int16_t yy_nxt[38] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,    4,   11,   12,
-        4,    4,   15,   14,   17,   18,   17,   13,   16,   14,
-       13,   19,    3,   19,   19,   19,   19,   19,   19,   19,
-       19,   19,   19,   19,   19
+        4,    5,    6,    7,    8,    8,    9,   10,    4,   11,
+       12,    4,    4,   15,   14,   17,   18,   17,   13,   16,
+       14,   13,   19,    3,   19,   19,   19,   19,   19,   19,
+       19,   19,   19,   19,   19,   19,   19
     } ;
 
-static yyconst flex_int16_t yy_chk[36] =
+static yyconst flex_int16_t yy_chk[38] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,   11,   11,   17,   16,   15,   13,   12,   10,
-        5,    3,   19,   19,   19,   19,   19,   19,   19,   19,
-       19,   19,   19,   19,   19
+        1,    1,    1,   11,   11,   17,   16,   15,   13,   12,
+       10,    5,    3,   19,   19,   19,   19,   19,   19,   19,
+       19,   19,   19,   19,   19,   19,   19
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[9] =
+static yyconst flex_int32_t yy_rule_can_match_eol[8] =
     {   0,
-0, 0, 0, 0, 1, 0, 0, 0,     };
+0, 0, 0, 1, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -488,12 +488,8 @@ char *yytext;
     #include <stdlib.h>
     #include "yy.tab.h"
     void moveCursor();
-    void printCursor();
-    void moveAndPrintCursor();
-    void verifyParenthesisCount();
     int cursor = 0;
-    int parenthesis = 0;
-#line 497 "./bin/lex.yy.c"
+#line 493 "./bin/lex.yy.c"
 
 #define INITIAL 0
 
@@ -680,10 +676,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 17 "./src/lex.l"
+#line 13 "./src/lex.l"
 
  /* start */
-#line 687 "./bin/lex.yy.c"
+#line 683 "./bin/lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -742,7 +738,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 23 );
+		while ( yy_base[yy_current_state] != 24 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -778,7 +774,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "./src/lex.l"
+#line 15 "./src/lex.l"
 {
     moveCursor();
     yylval.number = atof(yytext);
@@ -788,7 +784,7 @@ YY_RULE_SETUP
 /* escaping spaces */
 case 2:
 YY_RULE_SETUP
-#line 26 "./src/lex.l"
+#line 22 "./src/lex.l"
 { 
     moveCursor(); 
 }
@@ -796,57 +792,43 @@ YY_RULE_SETUP
 /* handling parenthesis */
 case 3:
 YY_RULE_SETUP
-#line 31 "./src/lex.l"
-{ 
-    moveCursor(); 
-    parenthesis++; 
-    return yytext[0]; 
-}
-	YY_BREAK
-/* improve error here */
-case 4:
-YY_RULE_SETUP
-#line 38 "./src/lex.l"
-{ 
-    moveCursor(); 
-    parenthesis--;
-    return yytext[0]; 
-}
-	YY_BREAK
-/* must detect if input is a file or cmd input */
-case 5:
-/* rule 5 can match eol */
-YY_RULE_SETUP
-#line 45 "./src/lex.l"
+#line 27 "./src/lex.l"
 { 
     moveCursor();
-    verifyParenthesisCount();
+    return yytext[0]; 
+}
+	YY_BREAK
+case 4:
+/* rule 4 can match eol */
+YY_RULE_SETUP
+#line 32 "./src/lex.l"
+{ 
+    moveCursor();
     return EOI;
 }
 	YY_BREAK
-case 6:
+case 5:
 YY_RULE_SETUP
-#line 51 "./src/lex.l"
+#line 37 "./src/lex.l"
 {
     moveCursor(); 
     return yytext[0]; 
 }
 	YY_BREAK
-case 7:
+case 6:
 YY_RULE_SETUP
-#line 56 "./src/lex.l"
+#line 42 "./src/lex.l"
 { 
-    moveAndPrintCursor();
-    printf("Error: expected operator,number or parenthesis at position = %d\n",cursor);
-    exit(0);
+    moveCursor();
+    yyerror("Expression expected");
 }
 	YY_BREAK
-case 8:
+case 7:
 YY_RULE_SETUP
-#line 61 "./src/lex.l"
+#line 46 "./src/lex.l"
 ECHO;
 	YY_BREAK
-#line 850 "./bin/lex.yy.c"
+#line 832 "./bin/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1856,31 +1838,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "./src/lex.l"
+#line 46 "./src/lex.l"
 
 
 
 void moveCursor(){
     cursor += yyleng;
-}
-
-void printCursor(){
-    printf("%*c^\n",cursor-1,' ');
-}
-
-void moveAndPrintCursor(){
-    moveCursor();
-    printCursor();
-}
-
-void verifyParenthesisCount(){
-    if(parenthesis != 0){
-        printCursor();
-        if(parenthesis > 0){
-            printf("Error: closing parenthesis expected at position = %d\n",cursor);
-        }else{
-            printf("Error: openning parenthesis expected at position = %d before the closing one \n",cursor-1);
-        }
-        exit(0);
-    }
 }
