@@ -47,13 +47,15 @@ extern int yydebug;
   {
     NUMBER = 258,
     EOI = 259,
-    unary_minus = 260
+    MOY = 260,
+    unary_minus = 261
   };
 #endif
 /* Tokens.  */
 #define NUMBER 258
 #define EOI 259
-#define unary_minus 260
+#define MOY 260
+#define unary_minus 261
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -61,9 +63,15 @@ typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 21 "./src/yacc.y" /* yacc.c:1909  */
-double number;
 
-#line 67 "./bin/yy.tab.h" /* yacc.c:1909  */
+    struct list{
+        double *params;
+        int size;
+    }list;
+    double number;
+    int function;
+
+#line 75 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

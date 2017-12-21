@@ -22,6 +22,11 @@ end-of-input [\r\nEOF]
     return NUMBER;
 }
 
+"moyenne" {
+    moveCursor(); 
+    return MOY;
+}
+
  /* escaping spaces */
 {spaces}+ { 
     moveCursor(); 
@@ -32,6 +37,12 @@ end-of-input [\r\nEOF]
     moveCursor();
     return yytext[0]; 
 }
+
+"," { 
+    moveCursor();
+    return yytext[0]; 
+}
+
 
 {end-of-input} { 
     moveCursor();

@@ -18,13 +18,30 @@
     
     // global functions
 %}
-%union {double number;}
-%token <number> NUMBER EOI
-%type <number> Expr Line
+%union {
+    struct list{
+        double *params;
+        int size;
+    }list;
+    double number;
+    int function;
+}
+
+/* Tokens */
+%token <number> NUMBER EOI MOY
+
+/* precedence */
 %left '-' '+'
 %left '*' '/'
 %right '^'    
 %right unary_minus
+
+/* Types definitions */
+%type <number> Expr Line Function
+%type <function> Name
+%type <list> List
+
+/* starting point */
 %start Input
 %%
 Input:
@@ -46,6 +63,7 @@ Expr: NUMBER        { $$ = $1; }
     | Expr '^' Expr { $$ = pow($1, $3); }
     | '-' Expr %prec unary_minus { $$ = -$2; }
     | '(' Expr ')'{ $$ = $2; }
+    | Function { $$  = $1 ; }
 
     /* errors handling */
     | '(' error { yyerror(EXPRESSION_EXPECTED); }
@@ -58,6 +76,34 @@ Expr: NUMBER        { $$ = $1; }
     | Expr '/' error { yyerror(EXPRESSION_EXPECTED); }
     | Expr '^' error { yyerror(EXPRESSION_EXPECTED); }
     ;
+
+Function: Name '(' List ')' {
+            int i;
+            $$ = 0;
+            if($1 == 1){
+                for(i=0; i < $3.size; i++){
+                    $$ += $3.params[i];
+                }
+                $$ /= $3.size;
+            }
+        };
+
+Name: MOY {$$ = 1;}
+    ;
+
+List: List ',' Expr { 
+        $$.params = $1.params;
+        $$.size = $1.size; 
+        $$.params[$$.size++] = $3;
+    }
+    | Expr {
+        $$.params = malloc(100); 
+        $$.params[0] = $1; 
+        $$.size = 1;
+    }
+    ;
+
+
 %%
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;
