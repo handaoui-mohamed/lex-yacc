@@ -8,12 +8,8 @@ lex:
 yacc: error.strings.h
 	bison -o ./bin/yy.tab.c -dy ./src/yacc.y
 
-prog: lex yacc functions
-	gcc -o prog ./bin/functions.c ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
-
-functions:
-	cp ./src/functions.h ./bin/functions.h
-	cp ./src/functions.c ./bin/functions.c
+prog: lex yacc
+	gcc -o prog ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
 
 error.strings.h:
 	cp ./src/error.strings.h ./bin/error.strings.h

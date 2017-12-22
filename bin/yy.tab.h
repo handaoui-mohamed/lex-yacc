@@ -77,13 +77,18 @@ union YYSTYPE
 #line 20 "./src/yacc.y" /* yacc.c:1909  */
 
     struct list{
-        struct node *params;
-        struct node *current;
+        double value;
+        int size;
     } list;
+    struct variance_list{
+        double value;
+        double sqr_value;
+        int size;
+    } variance_list;
     double number;
     int function;
 
-#line 87 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 92 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
