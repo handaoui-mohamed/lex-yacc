@@ -88,7 +88,7 @@ end-of-input [\r\nEOF]
 
 . { 
     moveCursor();
-    yyerror("Invalid symbol, an arithmetic expression is expected");
+    yyerror("Unexpected character");
 }
 %%
 

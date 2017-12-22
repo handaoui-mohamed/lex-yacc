@@ -917,7 +917,7 @@ YY_RULE_SETUP
 #line 89 "./src/lex.l"
 { 
     moveCursor();
-    yyerror("Invalid symbol, an arithmetic expression is expected");
+    yyerror("Unexpected character");
 }
 	YY_BREAK
 case 15:

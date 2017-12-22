@@ -1,7 +1,6 @@
 %{ 
     #include <stdlib.h>
     #include <stdio.h>
-    #include <string.h>
     #include <math.h>
     #include "yy.tab.h"
     #include "error.strings.h"
@@ -20,13 +19,9 @@
 %union {
     struct list{
         double value;
-        int size;
-    } list;
-    struct variance_list{
-        double value;
         double sqr_value;
         int size;
-    } variance_list;
+    } list;
     double number;
     int function;
 }
@@ -43,8 +38,7 @@
 
 /* Types definitions */
 %type <number> Expr Line Function
-%type <list> AVERAGE_List PRODUCT_List MIN_List MAX_List
-%type <variance_list> VARIANCE_List
+%type <list> AVERAGE_List PRODUCT_List MIN_List MAX_List VARIANCE_List
 
 /* starting point */
 %start Input
@@ -82,13 +76,23 @@ Expr: NUMBER        { $$ = $1; }
     | Expr '^' error { yyerror(EXPRESSION_EXPECTED); }
     ;
 
-Function: AVERAGE '(' AVERAGE_List')' {  $$ = $3.value / $3.size; }
-        | SUM '(' AVERAGE_List')' { $$ = $3.value; }
-        | PRODUCT '(' PRODUCT_List')' { $$ = $3.value; }
-        | MIN '(' MIN_List')' { $$ = $3.value; }
-        | MAX '(' MAX_List')' { $$ = $3.value; }
-        | VARIANCE '(' VARIANCE_List')' { $$ = ($3.sqr_value / $3.size) - pow($3.value / $3.size,2); }
-        | STANDARD_DEVIATION '(' VARIANCE_List')' { $$ = sqrt(($3.sqr_value / $3.size) - pow($3.value / $3.size,2)); }
+Function: AVERAGE '(' AVERAGE_List ')' {  $$ = $3.value / $3.size; }
+        | SUM '(' AVERAGE_List ')' { $$ = $3.value; }
+        | PRODUCT '(' PRODUCT_List ')' { $$ = $3.value; }
+        | MIN '(' MIN_List ')' { $$ = $3.value; }
+        | MAX '(' MAX_List ')' { $$ = $3.value; }
+        | VARIANCE '(' VARIANCE_List ')' { $$ = ($3.sqr_value / $3.size) - pow($3.value / $3.size,2); }
+        | STANDARD_DEVIATION '(' VARIANCE_List ')' { $$ = sqrt(($3.sqr_value / $3.size) - pow($3.value / $3.size,2)); }
+
+        /* functions errors handling */
+        | AVERAGE '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | SUM '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | PRODUCT '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | MIN '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | MAX '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | VARIANCE '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | STANDARD_DEVIATION '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
+        | error { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); }
         ;
 
 AVERAGE_List: AVERAGE_List ',' Expr { $$.value = $1.value + $3; $$.size = $1.size + 1; }
@@ -143,8 +147,8 @@ int yyerror(char *s) {
         if(fileIsOpen){
             printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);
         }else {
-            printf("%*c^\n",cursor-1,' ');
-            printf("Error: %s at position %d\n\n", s, cursor-1);
+            if(cursor-1 != 0) printf("%*c^\n",cursor-1,' '); else printf("^\n");
+            printf("Error: %s at position %d\n\n", s, cursor);
         }
         exit(0);
     }
