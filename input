@@ -1,4 +1,5 @@
 moyenne(2,4,moyenne(5,3)+5)*2+1--2
+5 + 3 * somme(4, somme(5,7,8), variance(1,1+1,moyenne(2,4),4,6-2))
 moyenne(2,4,3)
 moyenne(2)
 moyenne(2/5,10*12)*28
