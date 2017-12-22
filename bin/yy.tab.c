@@ -1607,7 +1607,7 @@ yyreduce:
 
   case 43:
 #line 106 "./src/yacc.y" /* yacc.c:1646  */
-    { if ( (yyvsp[0].number) <  (yyvsp[-2].list).value) (yyval.list).value = (yyvsp[0].number); }
+    { if ( (yyvsp[0].number) < (yyvsp[-2].list).value) (yyval.list).value = (yyvsp[0].number); }
 #line 1612 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1619,7 +1619,7 @@ yyreduce:
 
   case 45:
 #line 110 "./src/yacc.y" /* yacc.c:1646  */
-    { if ( (yyvsp[0].number) >  (yyvsp[-2].list).value) (yyval.list).value = (yyvsp[0].number); }
+    { if ( (yyvsp[0].number) > (yyvsp[-2].list).value) (yyval.list).value = (yyvsp[0].number); }
 #line 1624 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 

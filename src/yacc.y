@@ -103,11 +103,11 @@ PRODUCT_List: PRODUCT_List ',' Expr { $$.value = $1.value * $3; }
             | Expr { $$.value = $1; }
             ;
 
-MIN_List: MIN_List ',' Expr { if ( $3 <  $1.value) $$.value = $3; }
+MIN_List: MIN_List ',' Expr { if ( $3 < $1.value) $$.value = $3; }
         | Expr { $$.value = $1; }
         ;
 
-MAX_List: MAX_List ',' Expr { if ( $3 >  $1.value) $$.value = $3; }
+MAX_List: MAX_List ',' Expr { if ( $3 > $1.value) $$.value = $3; }
         | Expr { $$.value = $1; }
         ;
 
