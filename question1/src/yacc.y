@@ -2,6 +2,7 @@
     #include <stdlib.h>
     #include <stdio.h>
     #include <math.h>
+    #include <string.h>
     #include "yy.tab.h"
     #include "error.strings.h"
 
@@ -15,20 +16,20 @@
     
     // global functions
     void help();
+    
+    // quadruplet
+    char st [100][10];
+    int top = 0;
+    char tempNumber[2]="0";
+    char temp[5]="temp";
+    void push();
+    void generateQuadruplet();
+    void generateQuadrupletUnaryMinus();
 %}
-%union {
-    struct list{
-        double value;
-        double sqr_value;
-        int size;
-    } list;
-    double number;
-    int function;
-}
+%union { int number; }
 
 /* Tokens */
-%token <number> NUMBER EOI
-%token <number> AVERAGE SUM PRODUCT VARIANCE STANDARD_DEVIATION MIN MAX
+%token <number> ALPHA EOI
 
 /* precedency */
 %left '-' '+'
@@ -37,91 +38,50 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr Line Function
-%type <list> AVERAGE_List PRODUCT_List MIN_List MAX_List VARIANCE_List
+%type <number> Expr
 
 /* starting point */
 %start Input
 %%
 Input:
-     | Input Line { cursor = 0;}
+     | Input Line { cursor = 0; strcpy(tempNumber, "0"); printf("\n"); }
      ;
     
 Line: EOI
-    | Expr EOI { printf("%lf \n", $1);}
+    | Expr EOI { }
     ;
 
-Expr: NUMBER        { $$ = $1; }
-    | Expr '-' Expr { $$ = $1 - $3; }
-    | Expr '+' Expr { $$ = $1 + $3; }
-    | Expr '*' Expr { $$ = $1 * $3; }
-    | Expr '/' Expr { 
-       if($3 == 0) yyerror("division by zero");
-       $$ = $1 / $3;
-    }
-    | Expr '^' Expr { $$ = pow($1, $3); }
-    | '-' Expr %prec unary_minus { $$ = -$2; }
-    | '(' Expr ')'{ $$ = $2; }
-    | Function { $$  = $1 ; }
+Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
+    | Expr '+' { push(); } Expr { generateQuadruplet(); }
+    | Expr '/' { push(); } Expr { generateQuadruplet(); }
+    | Expr '*' { push(); } Expr { generateQuadruplet(); }
+    | Expr '^' { push(); } Expr { generateQuadruplet(); }
+    | '-' { push(); } Expr %prec unary_minus { generateQuadrupletUnaryMinus(); }
+    | '(' Expr ')' {}
+    | ALPHA { push(); }
 
-    /* basic arithmetic errors handling */
+
+    // /* errors handling */
     | '(' error { yyerror(EXPRESSION_EXPECTED); }
     | '(' error ')' { yyerror(EXPRESSION_EXPECTED); }
     | '(' Expr error { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
-    | Expr error { yyerror(OPERATOR_EXPECTED); }
-    | Expr '+' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '-' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '*' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '/' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '^' error { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error '+' { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error '-' { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error '*' { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error '/' { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error '^' { yyerror(EXPRESSION_EXPECTED); }
+    | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
     ;
-
-Function: AVERAGE '(' AVERAGE_List ')' {  $$ = $3.value / $3.size; }
-        | SUM '(' AVERAGE_List ')' { $$ = $3.value; }
-        | PRODUCT '(' PRODUCT_List ')' { $$ = $3.value; }
-        | MIN '(' MIN_List ')' { $$ = $3.value; }
-        | MAX '(' MAX_List ')' { $$ = $3.value; }
-        | VARIANCE '(' VARIANCE_List ')' { $$ = ($3.sqr_value / $3.size) - pow($3.value / $3.size,2); }
-        | STANDARD_DEVIATION '(' VARIANCE_List ')' { $$ = sqrt(($3.sqr_value / $3.size) - pow($3.value / $3.size,2)); }
-
-        /* functions errors handling */
-        | AVERAGE '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | SUM '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | PRODUCT '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | MIN '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | MAX '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | VARIANCE '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | STANDARD_DEVIATION '(' error { yyerror(FUNCTION_PARAMS_EXPECTED); }
-        | error { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); }
-        ;
-
-AVERAGE_List: AVERAGE_List ',' Expr { $$.value = $1.value + $3; $$.size = $1.size + 1; }
-            | Expr { $$.value = $1; $$.size = 1; }
-            ;
-
-PRODUCT_List: PRODUCT_List ',' Expr { $$.value = $1.value * $3; }
-            | Expr { $$.value = $1; }
-            ;
-
-MIN_List: MIN_List ',' Expr { if ( $3 < $1.value) $$.value = $3; }
-        | Expr { $$.value = $1; }
-        ;
-
-MAX_List: MAX_List ',' Expr { if ( $3 > $1.value) $$.value = $3; }
-        | Expr { $$.value = $1; }
-        ;
-
-VARIANCE_List: VARIANCE_List ',' Expr { 
-                $$.value = $1.value + $3; 
-                $$.sqr_value = $1.sqr_value + pow($3,2);
-                $$.size = $1.size + 1; 
-             }
-             | Expr { $$.value = $1; $$.sqr_value = pow($1,2); $$.size = 1; }
-             ;
-
 %%
 int main(int nbInputs,char **inputs){
     extern FILE *yyin;
+    extern FILE *yyout;
+    
+    yyout = fopen("output","w");
+    if(yyout == NULL){
+        printf("Error: unable to open file or file does not existe!\n");
+        exit(0);
+    }
     
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
         help();
@@ -139,6 +99,7 @@ int main(int nbInputs,char **inputs){
     }
     yyparse();
     if(fileIsOpen) fclose(yyin);
+    fclose(yyout);
     return 0;
 }
 
@@ -185,4 +146,27 @@ void help()
     printf("\t5- ecart-type.\n");
     printf("\t5- min.\n");
     printf("\t5- max.\n");
+}
+
+
+void push(){
+    strcpy(st[++top],yytext);
+}
+
+void generateQuadruplet(){
+    strcpy(temp, "temp");
+    strcat(temp,tempNumber);
+    printf("%s := %s %s %s\n",temp,st[top-2],st[top-1],st[top]);
+    top -= 2;
+    strcpy(st[top], temp);
+    tempNumber[0]++;
+}
+
+void generateQuadrupletUnaryMinus(){
+    strcpy(temp, "temp");
+    strcat(temp,tempNumber);
+    printf("%s := -%s\n",temp,st[top]);
+    top--;
+    strcpy(st[top], temp);
+    tempNumber[0]++;
 }

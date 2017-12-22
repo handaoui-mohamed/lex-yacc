@@ -45,46 +45,25 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUMBER = 258,
+    ALPHA = 258,
     EOI = 259,
-    AVERAGE = 260,
-    SUM = 261,
-    PRODUCT = 262,
-    VARIANCE = 263,
-    STANDARD_DEVIATION = 264,
-    MIN = 265,
-    MAX = 266,
-    unary_minus = 267
+    unary_minus = 260
   };
 #endif
 /* Tokens.  */
-#define NUMBER 258
+#define ALPHA 258
 #define EOI 259
-#define AVERAGE 260
-#define SUM 261
-#define PRODUCT 262
-#define VARIANCE 263
-#define STANDARD_DEVIATION 264
-#define MIN 265
-#define MAX 266
-#define unary_minus 267
+#define unary_minus 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 19 "./src/yacc.y" /* yacc.c:1909  */
+#line 29 "./src/yacc.y" /* yacc.c:1909  */
+ int number; 
 
-    struct list{
-        double value;
-        double sqr_value;
-        int size;
-    } list;
-    double number;
-    int function;
-
-#line 88 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 67 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

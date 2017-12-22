@@ -9,55 +9,17 @@
     // global variables
     int cursor = 0;
 %}
-number [0-9]+(\.[0-9]+)?
+alpha [a-z]
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
 %option yylineno
 %%
  /* start */
-{number} {
+{alpha} {
     moveCursor();
-    yylval.number = atof(yytext);
-    return NUMBER;
+    return ALPHA;
 }
-
- /* START: Function names */
-"moyenne" {
-    moveCursor(); 
-    return AVERAGE;
-}
-
-"somme" {
-    moveCursor(); 
-    return SUM;
-}
-
-"produit" {
-    moveCursor(); 
-    return PRODUCT;
-}
-
-"variance" {
-    moveCursor(); 
-    return VARIANCE;
-}
-
-"ecart-type" {
-    moveCursor(); 
-    return STANDARD_DEVIATION;
-}
-
-"min" {
-    moveCursor(); 
-    return MIN;
-}
-
-"max" {
-    moveCursor(); 
-    return MAX;
-}
- /* END: Function names */
 
  /* escaping spaces */
 {spaces}+ { 
@@ -66,11 +28,6 @@ end-of-input [\r\nEOF]
 
  /* handling parenthesis */
 "("|")" { 
-    moveCursor();
-    return yytext[0]; 
-}
-
-"," { 
     moveCursor();
     return yytext[0]; 
 }
