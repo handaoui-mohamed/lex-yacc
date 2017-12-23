@@ -45,31 +45,33 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ALPHA = 258,
+    IDENTIFIER = 258,
     EOI = 259,
     SUM = 260,
     PRODUCT = 261,
     AVERAGE = 262,
-    unary_minus = 263
+    VARIANCE = 263,
+    unary_minus = 264
   };
 #endif
 /* Tokens.  */
-#define ALPHA 258
+#define IDENTIFIER 258
 #define EOI 259
 #define SUM 260
 #define PRODUCT 261
 #define AVERAGE 262
-#define unary_minus 263
+#define VARIANCE 263
+#define unary_minus 264
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 36 "./src/yacc.y" /* yacc.c:1909  */
+#line 39 "./src/yacc.y" /* yacc.c:1909  */
  int number; 
 
-#line 73 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 75 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

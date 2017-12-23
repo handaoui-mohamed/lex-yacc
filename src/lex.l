@@ -9,18 +9,13 @@
     // global variables
     int cursor = 0;
 %}
-alpha [a-z]
+identifier [a-z]+[0-9]*
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
 %option yylineno
 %%
  /* start */
-{alpha} {
-    moveCursor();
-    return ALPHA;
-}
-
 "moyenne" {
     moveCursor(); 
     return AVERAGE;
@@ -36,9 +31,19 @@ end-of-input [\r\nEOF]
     return PRODUCT;
 }
 
+"variance" {
+    moveCursor(); 
+    return VARIANCE;
+}
+
 "," { 
     moveCursor();
     return yytext[0]; 
+}
+
+{identifier} {
+    moveCursor();
+    return IDENTIFIER;
 }
 
 

@@ -24,7 +24,7 @@
     int top = 0;
     int tempNumber = 0;
     int lineNumber = 1;
-    char temp[5]="temp";
+    char temp[10]="temp";
     void push();
     void generateQuadruplet();
     void generateQuadrupletUnaryMinus();
@@ -32,12 +32,15 @@
     void generateSumQuadruplet();
     void generateProductQuadruplet();
     void generateAverageQuadruplet();
+    void generateVarianceQuadruplet();
+    void generateInitVarianceQuadruplet();
+    void generatePreVarianceQuadruplet();
 %}
 %union { int number; }
 
 /* Tokens */
-%token <number> ALPHA EOI
-%token <number> SUM PRODUCT AVERAGE
+%token <number> IDENTIFIER EOI
+%token <number> SUM PRODUCT AVERAGE VARIANCE
 
 /* precedency */
 %left '-' '+'
@@ -46,7 +49,7 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr PRODUCT_List AVERAGE_List
+%type <number> Expr PRODUCT_List AVERAGE_List VARIANCE_List
 
 /* starting point */
 %start Input
@@ -66,7 +69,7 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     | Expr '^' { push(); } Expr { generatePowQuadruplet(); }
     | '-' { push(); } Expr %prec unary_minus { generateQuadrupletUnaryMinus(); }
     | '(' Expr ')' {}
-    | ALPHA { push(); }
+    | IDENTIFIER { push(); }
     | Function {}
 
 
@@ -85,15 +88,20 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
 Function: SUM '(' AVERAGE_List ')' {}
         | AVERAGE '(' AVERAGE_List ')' { generateAverageQuadruplet($3); } 
         | PRODUCT '(' PRODUCT_List ')' {}
+        | VARIANCE '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); }
         ;
 
-AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
+AVERAGE_List: AVERAGE_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
             | Expr { $$ = 1;}
             ;
 
-PRODUCT_List: PRODUCT_List { push(); } ',' {} Expr { generateProductQuadruplet(); }
+PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
             | Expr {}
             ;
+
+VARIANCE_List: VARIANCE_List { push(); } ',' Expr { generatePreVarianceQuadruplet($$++); }
+             | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
+             ;
 %%
 int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
@@ -125,6 +133,7 @@ int main(int nbInputs,char **inputs){
 }
 
 int yyerror(char *s) {
+    printf("errror\n");
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
             printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);
@@ -191,6 +200,42 @@ void generateProductQuadruplet(){
 void generateAverageQuadruplet(int size){
     sprintf(temp, "temp%d",tempNumber++);
     printf("%d   %s := %s / %d\n",lineNumber++,temp,st[top],size);
+    strcpy(st[top], temp);
+}
+
+void generateInitVarianceQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s * %s\n",lineNumber++,temp,st[top],st[top]);
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s\n",lineNumber++,temp,st[top]);
+    top --;
+    strcpy(st[top], temp);
+}
+
+void generatePreVarianceQuadruplet(int size){
+    tempNumber++;
+    sprintf(temp, "temp%d",tempNumber-size);
+    printf("%d   %s := %s * %s\n",lineNumber++,temp,st[top],st[top]);
+    char prevTemp[10] = "";
+    sprintf(prevTemp, "temp%d",tempNumber-(size + 1));
+    printf("%d   %s := %s + %s\n",lineNumber++,prevTemp,prevTemp,st[top]);
+    sprintf(prevTemp, "temp%d",tempNumber-(size + 2));
+    printf("%d   %s := %s + %s\n",lineNumber++,prevTemp,prevTemp,temp);
+    top --;
+    strcpy(st[top], temp);
+}
+
+void generateVarianceQuadruplet(int size){
+    char prevTemp[10] = "";
+    sprintf(prevTemp, "temp%d",tempNumber-size-1);
+    printf("%d   %s := %s / %d\n",lineNumber++,prevTemp,prevTemp,size);
+    char prevTemp2[10] = "";
+    sprintf(prevTemp2, "temp%d",tempNumber-size);
+    printf("%d   %s := %s / %d\n",lineNumber++,prevTemp2,prevTemp2,size);
+    printf("%d   %s := %s * %s\n",lineNumber++,prevTemp2,prevTemp2,prevTemp2);
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s - %s\n",lineNumber++,prevTemp,prevTemp2,prevTemp);
+    top -= 2;
     strcpy(st[top], temp);
 }
 
