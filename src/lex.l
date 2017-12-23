@@ -36,6 +36,11 @@ end-of-input [\r\nEOF]
     return VARIANCE;
 }
 
+"ecart-type" {
+    moveCursor(); 
+    return STANDARD_DEVIATION;
+}
+
 "," { 
     moveCursor();
     return yytext[0]; 
