@@ -91,15 +91,15 @@ Function: SUM '(' AVERAGE_List ')' {}
         | VARIANCE '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); }
         ;
 
-AVERAGE_List: AVERAGE_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
+AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
             | Expr { $$ = 1;}
             ;
 
-PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
+PRODUCT_List: PRODUCT_List { push(); } ',' {} Expr { generateProductQuadruplet(); }
             | Expr {}
             ;
 
-VARIANCE_List: VARIANCE_List { push(); } ',' Expr { generatePreVarianceQuadruplet($$++); }
+VARIANCE_List: VARIANCE_List { push(); } ',' {} Expr { generatePreVarianceQuadruplet($$++); }
              | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
              ;
 %%
@@ -209,7 +209,7 @@ void generateInitVarianceQuadruplet(){
     sprintf(temp, "temp%d",tempNumber++);
     printf("%d   %s := %s\n",lineNumber++,temp,st[top]);
     top --;
-    strcpy(st[top], temp);
+    // strcpy(st[top], temp);
 }
 
 void generatePreVarianceQuadruplet(int size){
@@ -222,7 +222,7 @@ void generatePreVarianceQuadruplet(int size){
     sprintf(prevTemp, "temp%d",tempNumber-(size + 2));
     printf("%d   %s := %s + %s\n",lineNumber++,prevTemp,prevTemp,temp);
     top --;
-    strcpy(st[top], temp);
+    // strcpy(st[top], temp);
 }
 
 void generateVarianceQuadruplet(int size){
@@ -234,8 +234,10 @@ void generateVarianceQuadruplet(int size){
     printf("%d   %s := %s / %d\n",lineNumber++,prevTemp2,prevTemp2,size);
     printf("%d   %s := %s * %s\n",lineNumber++,prevTemp2,prevTemp2,prevTemp2);
     sprintf(temp, "temp%d",tempNumber++);
-    printf("%d   %s := %s - %s\n",lineNumber++,prevTemp,prevTemp2,prevTemp);
-    top -= 2;
+    printf("%d   %s := %s - %s\n",lineNumber++,prevTemp2,prevTemp2,prevTemp);
+    tempNumber -= size + 1;
+    sprintf(temp, "temp%d",tempNumber);
+    top -=2;
     strcpy(st[top], temp);
 }
 
