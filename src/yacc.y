@@ -10,6 +10,8 @@
     extern int cursor;
     extern char* yytext;
     extern int yylineno;
+    extern FILE *yyin;
+    extern FILE *yyout;
     
     // global variables
     int fileIsOpen = 0;
@@ -20,16 +22,22 @@
     // quadruplet
     char st [100][10];
     int top = 0;
-    char tempNumber[2]="0";
+    int tempNumber = 0;
+    int lineNumber = 1;
     char temp[5]="temp";
     void push();
     void generateQuadruplet();
     void generateQuadrupletUnaryMinus();
+    void generatePowQuadruplet();
+    void generateSumQuadruplet();
+    void generateProductQuadruplet();
+    void generateAverageQuadruplet();
 %}
 %union { int number; }
 
 /* Tokens */
 %token <number> ALPHA EOI
+%token <number> SUM PRODUCT AVERAGE
 
 /* precedency */
 %left '-' '+'
@@ -38,13 +46,13 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr
+%type <number> Expr PRODUCT_List AVERAGE_List
 
 /* starting point */
 %start Input
 %%
 Input:
-     | Input Line { cursor = 0; strcpy(tempNumber, "0"); printf("\n"); }
+     | Input Line { cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
      ;
     
 Line: EOI
@@ -55,10 +63,11 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     | Expr '+' { push(); } Expr { generateQuadruplet(); }
     | Expr '/' { push(); } Expr { generateQuadruplet(); }
     | Expr '*' { push(); } Expr { generateQuadruplet(); }
-    | Expr '^' { push(); } Expr { generateQuadruplet(); }
+    | Expr '^' { push(); } Expr { generatePowQuadruplet(); }
     | '-' { push(); } Expr %prec unary_minus { generateQuadrupletUnaryMinus(); }
     | '(' Expr ')' {}
     | ALPHA { push(); }
+    | Function {}
 
 
     // /* errors handling */
@@ -72,17 +81,21 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     | Expr error '^' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
     ;
+
+Function: SUM '(' AVERAGE_List ')' {}
+        | AVERAGE '(' AVERAGE_List ')' { generateAverageQuadruplet(); }
+        | PRODUCT '(' PRODUCT_List ')' {}
+        ;
+
+AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); } 
+            | Expr {}
+            ;
+
+PRODUCT_List: PRODUCT_List { push(); } ',' {} Expr { generateProductQuadruplet(); }
+            | Expr {}
+            ;
 %%
-int main(int nbInputs,char **inputs){
-    extern FILE *yyin;
-    extern FILE *yyout;
-    
-    yyout = fopen("output","w");
-    if(yyout == NULL){
-        printf("Error: unable to open file or file does not existe!\n");
-        exit(0);
-    }
-    
+int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
         help();
         exit(0);
@@ -90,16 +103,24 @@ int main(int nbInputs,char **inputs){
 
     if(nbInputs == 3 && strcmp(inputs[2], "-f")){
         yyin = NULL;
-        yyin = fopen(inputs[2],"r");
+        yyout = NULL;
+        yyin = fopen(inputs[2],"r"); 
+        yyout = fopen("output","w");
         if(yyin) fileIsOpen = 1;
         else {
             printf("Error: unable to open file or file does not existe!\n");
             exit(0);
         }
+        if(yyout == NULL){
+            printf("Error: unable to open file or file does not existe!\n");
+            exit(0);
+        }
     }
     yyparse();
-    if(fileIsOpen) fclose(yyin);
-    fclose(yyout);
+    if(fileIsOpen) {
+        fclose(yyin);
+        fclose(yyout);
+    }
     return 0;
 }
 
@@ -153,20 +174,51 @@ void push(){
     strcpy(st[++top],yytext);
 }
 
-void generateQuadruplet(){
-    strcpy(temp, "temp");
-    strcat(temp,tempNumber);
-    printf("%s := %s %s %s\n",temp,st[top-2],st[top-1],st[top]);
+void generateSumQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s + %s\n",lineNumber++,temp,st[top-2],st[top]);
     top -= 2;
     strcpy(st[top], temp);
-    tempNumber[0]++;
+}
+
+void generateProductQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s * %s\n",lineNumber++,temp,st[top-2],st[top]);
+    top -= 2;
+    strcpy(st[top], temp);
+}
+
+void generateAverageQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s / %s\n",lineNumber++,temp,st[top-2],st[top]);
+    top -= 2;
+    strcpy(st[top], temp);
+}
+
+void generateQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s %s %s\n",lineNumber++,temp,st[top-2],st[top-1],st[top]);
+    top -= 2;
+    strcpy(st[top], temp);
+}
+
+void generatePowQuadruplet(){
+    int saveTempNumber = tempNumber;
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s\n",lineNumber++,temp,st[top]);
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := %s * %s\n",lineNumber++,temp,temp,st[top-2]);
+    sprintf(temp, "temp%d",saveTempNumber);
+    printf("%d   %s := %s - 1\n",lineNumber++,temp,temp);
+    printf("%d   JNZ %s GOTO %d\n",lineNumber++,temp,lineNumber-2);
+    top -= 2;
+    sprintf(temp, "temp%d",tempNumber-1);
+    strcpy(st[top], temp);
 }
 
 void generateQuadrupletUnaryMinus(){
-    strcpy(temp, "temp");
-    strcat(temp,tempNumber);
-    printf("%s := -%s\n",temp,st[top]);
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%d   %s := -%s\n",lineNumber++,temp,st[top]);
     top--;
     strcpy(st[top], temp);
-    tempNumber[0]++;
 }

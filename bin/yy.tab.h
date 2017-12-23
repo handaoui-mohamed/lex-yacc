@@ -47,23 +47,29 @@ extern int yydebug;
   {
     ALPHA = 258,
     EOI = 259,
-    unary_minus = 260
+    SUM = 260,
+    PRODUCT = 261,
+    AVERAGE = 262,
+    unary_minus = 263
   };
 #endif
 /* Tokens.  */
 #define ALPHA 258
 #define EOI 259
-#define unary_minus 260
+#define SUM 260
+#define PRODUCT 261
+#define AVERAGE 262
+#define unary_minus 263
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 29 "./src/yacc.y" /* yacc.c:1909  */
+#line 36 "./src/yacc.y" /* yacc.c:1909  */
  int number; 
 
-#line 67 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 73 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

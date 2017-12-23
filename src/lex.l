@@ -21,6 +21,27 @@ end-of-input [\r\nEOF]
     return ALPHA;
 }
 
+"moyenne" {
+    moveCursor(); 
+    return SUM;
+}
+
+"somme" {
+    moveCursor(); 
+    return SUM;
+}
+
+"produit" {
+    moveCursor(); 
+    return PRODUCT;
+}
+
+"," { 
+    moveCursor();
+    return yytext[0]; 
+}
+
+
  /* escaping spaces */
 {spaces}+ { 
     moveCursor(); 
