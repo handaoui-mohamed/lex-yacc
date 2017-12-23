@@ -83,12 +83,12 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     ;
 
 Function: SUM '(' AVERAGE_List ')' {}
-        | AVERAGE '(' AVERAGE_List ')' { generateAverageQuadruplet(); }
+        | AVERAGE '(' AVERAGE_List  { generateAverageQuadruplet($3); } ')'
         | PRODUCT '(' PRODUCT_List ')' {}
         ;
 
-AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); } 
-            | Expr {}
+AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
+            | Expr { $$ = 1;}
             ;
 
 PRODUCT_List: PRODUCT_List { push(); } ',' {} Expr { generateProductQuadruplet(); }
@@ -188,10 +188,9 @@ void generateProductQuadruplet(){
     strcpy(st[top], temp);
 }
 
-void generateAverageQuadruplet(){
+void generateAverageQuadruplet(int size){
     sprintf(temp, "temp%d",tempNumber++);
-    printf("%d   %s := %s / %s\n",lineNumber++,temp,st[top-2],st[top]);
-    top -= 2;
+    printf("%d   %s := %s / %d\n",lineNumber++,temp,st[top],size);
     strcpy(st[top], temp);
 }
 

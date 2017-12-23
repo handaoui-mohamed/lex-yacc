@@ -23,7 +23,7 @@ end-of-input [\r\nEOF]
 
 "moyenne" {
     moveCursor(); 
-    return SUM;
+    return AVERAGE;
 }
 
 "somme" {

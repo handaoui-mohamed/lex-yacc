@@ -802,7 +802,7 @@ YY_RULE_SETUP
 #line 24 "./src/lex.l"
 {
     moveCursor(); 
-    return SUM;
+    return AVERAGE;
 }
 	YY_BREAK
 case 3:
