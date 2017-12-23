@@ -24,7 +24,7 @@
     int top = 0;
     int tempNumber = 0;
     int lineNumber = 1;
-    char temp[10]="temp";
+    char temp[10] = "";
     void push();
     void generateQuadruplet();
     void generateQuadrupletUnaryMinus();
@@ -237,7 +237,7 @@ void generateVarianceQuadruplet(int size){
     printf("%d   %s := %s - %s\n",lineNumber++,prevTemp2,prevTemp2,prevTemp);
     tempNumber -= size + 1;
     sprintf(temp, "temp%d",tempNumber);
-    top -=2;
+    top -= size - 2;
     strcpy(st[top], temp);
 }
 
