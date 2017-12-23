@@ -83,7 +83,7 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     ;
 
 Function: SUM '(' AVERAGE_List ')' {}
-        | AVERAGE '(' AVERAGE_List  { generateAverageQuadruplet($3); } ')'
+        | AVERAGE '(' AVERAGE_List ')' { generateAverageQuadruplet($3); } 
         | PRODUCT '(' PRODUCT_List ')' {}
         ;
 
