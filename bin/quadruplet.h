@@ -1,0 +1,15 @@
+void help();
+void push();
+void generateQuadruplet();
+void generateQuadrupletUnaryMinus();
+void generatePowQuadruplet();
+void generateSumQuadruplet();
+void generateProductQuadruplet();
+void generateAverageQuadruplet();
+void generateVarianceQuadruplet();
+void generateInitVarianceQuadruplet();
+void generatePreVarianceQuadruplet();
+void generateDeviationQuadruplet();
+void generateMinQuadruplet();
+void generateMaxQuadruplet();
+void generateInitMinMaxQuadruplet();
