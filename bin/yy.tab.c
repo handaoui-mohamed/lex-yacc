@@ -1543,13 +1543,13 @@ yyreduce:
 
   case 36:
 #line 81 "./src/yacc.y" /* yacc.c:1646  */
-    {}
+    { generateMinQuadruplet(); }
 #line 1548 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 82 "./src/yacc.y" /* yacc.c:1646  */
-    {}
+    { generateMaxQuadruplet(); }
 #line 1554 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1639,7 +1639,7 @@ yyreduce:
 
   case 52:
 #line 97 "./src/yacc.y" /* yacc.c:1646  */
-    { generateMinQuadruplet(); }
+    { generatePreMinQuadruplet(); }
 #line 1644 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1663,7 +1663,7 @@ yyreduce:
 
   case 56:
 #line 101 "./src/yacc.y" /* yacc.c:1646  */
-    { generateMaxQuadruplet(); }
+    { generatePreMaxQuadruplet(); }
 #line 1668 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 

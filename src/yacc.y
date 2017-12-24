@@ -78,8 +78,8 @@ Function: SUM '(' AVERAGE_List ')' {}
         | PRODUCT '(' PRODUCT_List ')' {}
         | VARIANCE '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); }
         | STANDARD_DEVIATION '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); generateDeviationQuadruplet($3); }
-        | MIN '(' MIN_List ')' {}
-        | MAX '(' MAX_List ')' {}
+        | MIN '(' MIN_List ')' { generateMinQuadruplet(); }
+        | MAX '(' MAX_List ')' { generateMaxQuadruplet(); }
         ;
 
 AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
@@ -94,11 +94,11 @@ VARIANCE_List: VARIANCE_List { push(); } ',' {} Expr { generatePreVarianceQuadru
              | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
              ;
 
-MIN_List: MIN_List { push(); } ',' {} Expr { generateMinQuadruplet(); }
+MIN_List: MIN_List { push(); } ',' {} Expr { generatePreMinQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
         ;
 
-MAX_List: MAX_List { push(); } ',' {} Expr { generateMaxQuadruplet(); }
+MAX_List: MAX_List { push(); } ',' {} Expr { generatePreMaxQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
         ;
 %%

@@ -10,6 +10,8 @@ void generateVarianceQuadruplet();
 void generateInitVarianceQuadruplet();
 void generatePreVarianceQuadruplet();
 void generateDeviationQuadruplet();
+void generatePreMinQuadruplet();
 void generateMinQuadruplet();
+void generatePreMaxQuadruplet();
 void generateMaxQuadruplet();
 void generateInitMinMaxQuadruplet();
