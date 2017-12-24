@@ -101,8 +101,9 @@
     void generateInitVarianceQuadruplet();
     void generatePreVarianceQuadruplet();
     void generateDeviationQuadruplet();
+    void generateMinQuadruplet();
 
-#line 106 "./bin/yy.tab.c" /* yacc.c:339  */
+#line 107 "./bin/yy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -162,10 +163,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 40 "./src/yacc.y" /* yacc.c:355  */
+#line 41 "./src/yacc.y" /* yacc.c:355  */
  int number; 
 
-#line 169 "./bin/yy.tab.c" /* yacc.c:355  */
+#line 170 "./bin/yy.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -180,7 +181,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 184 "./bin/yy.tab.c" /* yacc.c:358  */
+#line 185 "./bin/yy.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -478,11 +479,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    59,    62,    63,    66,    66,    67,    67,
-      68,    68,    69,    69,    70,    70,    71,    71,    72,    73,
-      74,    78,    79,    80,    81,    82,    83,    84,    85,    86,
-      86,    89,    90,    91,    92,    93,    96,    96,    96,    97,
-     100,   100,   100,   101,   104,   104,   104,   105
+       0,    59,    59,    60,    63,    64,    67,    67,    68,    68,
+      69,    69,    70,    70,    71,    71,    72,    72,    73,    74,
+      75,    79,    80,    81,    82,    83,    84,    85,    86,    87,
+      87,    90,    91,    92,    93,    94,    97,    97,    97,    98,
+     101,   101,   101,   102,   105,   105,   105,   106
 };
 #endif
 
@@ -1342,265 +1343,265 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 59 "./src/yacc.y" /* yacc.c:1646  */
+#line 60 "./src/yacc.y" /* yacc.c:1646  */
     { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
-#line 1348 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1349 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 63 "./src/yacc.y" /* yacc.c:1646  */
+#line 64 "./src/yacc.y" /* yacc.c:1646  */
     { }
-#line 1354 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1355 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 66 "./src/yacc.y" /* yacc.c:1646  */
+#line 67 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1360 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1361 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 66 "./src/yacc.y" /* yacc.c:1646  */
+#line 67 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1366 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1367 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 67 "./src/yacc.y" /* yacc.c:1646  */
+#line 68 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1372 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1373 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 67 "./src/yacc.y" /* yacc.c:1646  */
+#line 68 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1378 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1379 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 68 "./src/yacc.y" /* yacc.c:1646  */
+#line 69 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1384 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1385 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "./src/yacc.y" /* yacc.c:1646  */
+#line 69 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1390 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1391 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 69 "./src/yacc.y" /* yacc.c:1646  */
+#line 70 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1396 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1397 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 69 "./src/yacc.y" /* yacc.c:1646  */
+#line 70 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1402 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1403 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 70 "./src/yacc.y" /* yacc.c:1646  */
+#line 71 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1408 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1409 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 70 "./src/yacc.y" /* yacc.c:1646  */
+#line 71 "./src/yacc.y" /* yacc.c:1646  */
     { generatePowQuadruplet(); }
-#line 1414 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1415 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 71 "./src/yacc.y" /* yacc.c:1646  */
+#line 72 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1420 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1421 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 71 "./src/yacc.y" /* yacc.c:1646  */
+#line 72 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadrupletUnaryMinus(); }
-#line 1426 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1427 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 72 "./src/yacc.y" /* yacc.c:1646  */
+#line 73 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1432 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1433 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 73 "./src/yacc.y" /* yacc.c:1646  */
+#line 74 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1438 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1439 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 74 "./src/yacc.y" /* yacc.c:1646  */
+#line 75 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1444 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1445 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 78 "./src/yacc.y" /* yacc.c:1646  */
+#line 79 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1450 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1451 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 79 "./src/yacc.y" /* yacc.c:1646  */
+#line 80 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1456 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1457 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 80 "./src/yacc.y" /* yacc.c:1646  */
+#line 81 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
-#line 1462 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1463 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 81 "./src/yacc.y" /* yacc.c:1646  */
+#line 82 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1468 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1469 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 82 "./src/yacc.y" /* yacc.c:1646  */
+#line 83 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1474 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1475 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 83 "./src/yacc.y" /* yacc.c:1646  */
+#line 84 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1480 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1481 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 84 "./src/yacc.y" /* yacc.c:1646  */
+#line 85 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1486 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1487 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 85 "./src/yacc.y" /* yacc.c:1646  */
+#line 86 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1492 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1493 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 86 "./src/yacc.y" /* yacc.c:1646  */
+#line 87 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(OPERATOR_EXPECTED); }
-#line 1498 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1499 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 89 "./src/yacc.y" /* yacc.c:1646  */
+#line 90 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1504 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1505 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 90 "./src/yacc.y" /* yacc.c:1646  */
+#line 91 "./src/yacc.y" /* yacc.c:1646  */
     { generateAverageQuadruplet((yyvsp[-1].number)); }
-#line 1510 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1511 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 91 "./src/yacc.y" /* yacc.c:1646  */
+#line 92 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1516 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1517 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 92 "./src/yacc.y" /* yacc.c:1646  */
+#line 93 "./src/yacc.y" /* yacc.c:1646  */
     { generateVarianceQuadruplet((yyvsp[-1].number)); }
-#line 1522 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1523 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 93 "./src/yacc.y" /* yacc.c:1646  */
+#line 94 "./src/yacc.y" /* yacc.c:1646  */
     { generateVarianceQuadruplet((yyvsp[-1].number)); generateDeviationQuadruplet((yyvsp[-1].number)); }
-#line 1528 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1529 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1534 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1535 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1540 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1541 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     { generateSumQuadruplet(); (yyval.number)++; }
-#line 1546 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1547 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 97 "./src/yacc.y" /* yacc.c:1646  */
+#line 98 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = 1;}
-#line 1552 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1553 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 100 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1558 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1559 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 100 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1564 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1565 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 100 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     { generateProductQuadruplet(); }
-#line 1570 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1571 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 101 "./src/yacc.y" /* yacc.c:1646  */
+#line 102 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1576 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1577 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 104 "./src/yacc.y" /* yacc.c:1646  */
+#line 105 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1582 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1583 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 104 "./src/yacc.y" /* yacc.c:1646  */
+#line 105 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1588 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1589 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 104 "./src/yacc.y" /* yacc.c:1646  */
+#line 105 "./src/yacc.y" /* yacc.c:1646  */
     { generatePreVarianceQuadruplet((yyval.number)++); }
-#line 1594 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1595 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 105 "./src/yacc.y" /* yacc.c:1646  */
+#line 106 "./src/yacc.y" /* yacc.c:1646  */
     { generateInitVarianceQuadruplet(); (yyval.number) = 1; }
-#line 1600 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1601 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1604 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1605 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1828,7 +1829,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 236 "./src/yacc.y" /* yacc.c:1906  */
+#line 237 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
@@ -1969,7 +1970,6 @@ void generateVarianceQuadruplet(int size){
 }
 
 void generateDeviationQuadruplet(){
-    printf("racine\n");
     char temp1[10] = ""; 
     sprintf(temp1, "temp%d",tempNumber++); // n
     char temp2[10] = ""; 
