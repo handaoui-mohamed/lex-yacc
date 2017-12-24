@@ -7,7 +7,7 @@ int top = 0;
 int tempNumber = 0;
 int lineNumber = 1;
 char temp[10] = "";
-char string[20] = "";
+char result[100] = "";
 extern char *yytext;
 extern int printToFile;
 extern FILE *yyout;
@@ -47,12 +47,12 @@ void help()
 
 /* quadrulpet generation functions */
 
-void printQuadruplet(char *codeOp, char *op1, char *op2, char *dest)
+void printQuadruplet()
 {
     if (printToFile)
-        fprintf(yyout, "%03d   %s,%s,%s,%s\n", lineNumber++, codeOp, op1, op2, dest);
+        fprintf(yyout, "%03d   %s\n", lineNumber++, result);
     else
-        printf("%03d   %s,%s,%s,%s\n", lineNumber++, codeOp, op1, op2, dest);
+        printf("%03d   %s\n", lineNumber++, result);
 }
 
 void push()
@@ -63,8 +63,8 @@ void push()
 void generateSumQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printQuadruplet("+", st[top - 2], st[top], temp);
-    // printf("%03d   %s := %s + %s\n", lineNumber++, temp, st[top - 2], st[top]);
+    sprintf(result, "%s := %s + %s", temp, st[top - 2], st[top]);
+    printQuadruplet();
     top -= 2;
     strcpy(st[top], temp);
 }
@@ -72,8 +72,8 @@ void generateSumQuadruplet()
 void generateProductQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printQuadruplet("*", st[top - 2], st[top], temp);
-    // printf("%03d   %s := %s * %s\n", lineNumber++, temp, st[top - 2], st[top]);
+    sprintf(result, "%s := %s * %s", temp, st[top - 2], st[top]);
+    printQuadruplet();
     top -= 2;
     strcpy(st[top], temp);
 }
@@ -81,45 +81,53 @@ void generateProductQuadruplet()
 void generateAverageQuadruplet(int size)
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := %s / %d\n", lineNumber++, temp, st[top], size);
+    sprintf(result, "%s := %s / %d", temp, st[top], size);
+    printQuadruplet();
     strcpy(st[top], temp);
 }
 
 void generateInitVarianceQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := %s * %s\n", lineNumber++, temp, st[top], st[top]);
+    sprintf(result, "%s := %s * %s", temp, st[top], st[top]);
+    printQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := %s\n", lineNumber++, temp, st[top]);
+    sprintf(result, "%s := %s", temp, st[top]);
+    printQuadruplet();
     top--;
-    // strcpy(st[top], temp);
 }
 
 void generatePreVarianceQuadruplet(int size)
 {
     tempNumber++;
     sprintf(temp, "temp%d", tempNumber - size);
-    printf("%03d   %s := %s * %s\n", lineNumber++, temp, st[top], st[top]);
+    sprintf(result, "%s := %s * %s", temp, st[top], st[top]);
+    printQuadruplet();
     char prevTemp[10] = "";
     sprintf(prevTemp, "temp%d", tempNumber - (size + 1));
-    printf("%03d   %s := %s + %s\n", lineNumber++, prevTemp, prevTemp, st[top]);
+    sprintf(result, "%s := %s + %s", prevTemp, prevTemp, st[top]);
+    printQuadruplet();
     sprintf(prevTemp, "temp%d", tempNumber - (size + 2));
-    printf("%03d   %s := %s + %s\n", lineNumber++, prevTemp, prevTemp, temp);
+    sprintf(result, "%s := %s + %s", prevTemp, prevTemp, temp);
+    printQuadruplet();
     top--;
-    // strcpy(st[top], temp);
 }
 
 void generateVarianceQuadruplet(int size)
 {
     char prevTemp[10] = "";
     sprintf(prevTemp, "temp%d", tempNumber - size - 1);
-    printf("%03d   %s := %s / %d\n", lineNumber++, prevTemp, prevTemp, size);
+    sprintf(result, "%s := %s / %d", prevTemp, prevTemp, size);
+    printQuadruplet();
     char prevTemp2[10] = "";
     sprintf(prevTemp2, "temp%d", tempNumber - size);
-    printf("%03d   %s := %s / %d\n", lineNumber++, prevTemp2, prevTemp2, size);
-    printf("%03d   %s := %s * %s\n", lineNumber++, prevTemp2, prevTemp2, prevTemp2);
+    sprintf(result, "%s := %s / %d", prevTemp2, prevTemp2, size);
+    printQuadruplet();
+    sprintf(result, "%s := %s * %s", prevTemp2, prevTemp2, prevTemp2);
+    printQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := %s - %s\n", lineNumber++, prevTemp2, prevTemp2, prevTemp);
+    sprintf(result, "%s := %s - %s", prevTemp2, prevTemp2, prevTemp);
+    printQuadruplet();
     tempNumber -= size + 1;
     sprintf(temp, "temp%d", tempNumber);
     top -= size - 2;
@@ -133,23 +141,32 @@ void generateDeviationQuadruplet()
     char temp2[10] = "";
     sprintf(temp, "temp%d", tempNumber++);  //sqt
     sprintf(temp2, "temp%d", tempNumber++); // temp
-    printf("%03d   %s := %s / 2\n", lineNumber++, temp, temp1);
-    printf("%03d   %s := 0\n", lineNumber++, temp2);
-    printf("%03d   COMP %s %s\n", lineNumber++, temp, temp2); // while
-    printf("%03d   JE GOTO %d\n", lineNumber++, lineNumber + 6);
-    printf("%03d   %s := %s\n", lineNumber++, temp2, temp);
-    printf("%03d   %s := %s / %s\n", lineNumber++, temp, temp1, temp2);
-    printf("%03d   %s := %s + %s\n", lineNumber++, temp, temp, temp2);
-    printf("%03d   %s := %s / 2\n", lineNumber++, temp, temp);
-    printf("%03d   JMP GOTO %d\n", lineNumber++, lineNumber - 6);
+    sprintf(result, "%s := %s / 2", temp, temp1);
+    printQuadruplet();
+    sprintf(result, "%s := 0", temp2);
+    printQuadruplet();
+    sprintf(result, "COMP %s %s", temp, temp2); // while
+    printQuadruplet();
+    sprintf(result, "JE GOTO %d", lineNumber + 6);
+    printQuadruplet();
+    sprintf(result, "%s := %s", temp2, temp);
+    printQuadruplet();
+    sprintf(result, "%s := %s / %s", temp, temp1, temp2);
+    printQuadruplet();
+    sprintf(result, "%s := %s + %s", temp, temp, temp2);
+    printQuadruplet();
+    sprintf(result, "%s := %s / 2", temp, temp);
+    printQuadruplet();
+    sprintf(result, "JMP GOTO %d", lineNumber - 6);
+    printQuadruplet();
     strcpy(st[top], temp);
 }
 
 void generateQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    // printQuadruplet(st[top - 1], st[top - 2], st[top], temp);
-    printf("%03d   %s := %s %s %s\n", lineNumber++, temp, st[top - 2], st[top - 1], st[top]);
+    sprintf(result, "%s := %s %s %s", temp, st[top - 2], st[top - 1], st[top]);
+    printQuadruplet();
     top -= 2;
     strcpy(st[top], temp);
 }
@@ -158,15 +175,22 @@ void generatePowQuadruplet()
 {
     int saveTempNumber = tempNumber;
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := %s\n", lineNumber++, temp, st[top]);
-    printf("%03d   JNZ %s GOTO %d\n", lineNumber++, temp, lineNumber + 3);
+    sprintf(result, "%s := %s", temp, st[top]);
+    printQuadruplet();
+    sprintf(result, "JNZ %s GOTO %d", temp, lineNumber + 3);
+    printQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
-    printf("%03d   %s := 1\n", lineNumber++, temp);
-    printf("%03d   JMP GOTO %d \n", lineNumber++, lineNumber + 4);
-    printf("%03d   %s := %s * %s\n", lineNumber++, temp, temp, st[top - 2]);
+    sprintf(result, "%s := 1", temp);
+    printQuadruplet();
+    sprintf(result, "JMP GOTO %d ", lineNumber + 4);
+    printQuadruplet();
+    sprintf(result, "%s := %s * %s", temp, temp, st[top - 2]);
+    printQuadruplet();
     sprintf(temp, "temp%d", saveTempNumber);
-    printf("%03d   %s := %s - 1\n", lineNumber++, temp, temp);
-    printf("%03d   JNZ %s GOTO %d\n", lineNumber++, temp, lineNumber - 2);
+    sprintf(result, "%s := %s - 1", temp, temp);
+    printQuadruplet();
+    sprintf(result, "JNZ %s GOTO %d", temp, lineNumber - 2);
+    printQuadruplet();
     top -= 2;
     sprintf(temp, "temp%d", tempNumber - 1);
     strcpy(st[top], temp);
@@ -175,8 +199,8 @@ void generatePowQuadruplet()
 void generateQuadrupletUnaryMinus()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    // printQuadruplet("-", st[top], "\0", temp);
-    printf("%03d   %s := -%s\n", lineNumber++, temp, st[top]);
+    sprintf(result, "%s := -%s", temp, st[top]);
+    printQuadruplet();
     top--;
     strcpy(st[top], temp);
 }
@@ -184,21 +208,20 @@ void generateQuadrupletUnaryMinus()
 void generateInitMinMaxQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    // printQuadruplet("=", "\0", st[top], temp);
-    printf("%03d   %s := %s\n", lineNumber++, temp, st[top]);
+    sprintf(result, "%s := %s", temp, st[top]);
+    printQuadruplet();
     top--;
     strcpy(st[top], temp);
 }
 
 void generatePreMinQuadruplet()
 {
-    // printQuadruplet("COMP", temp, st[top], "\0");
-    // sprintf(string, "%d", lineNumber + 2);
-    // printQuadruplet("JL", "\0", "\0", string);
-    // printQuadruplet("=", st[top], "\0", temp);
-    printf("%03d   COMP %s %s\n", lineNumber++, st[top], st[top - 2]);
-    printf("%03d   JL %d\n", lineNumber++, lineNumber + 2);
-    printf("%03d   %s := %s\n", lineNumber++, st[top - 2], st[top]);
+    sprintf(result, "COMP %s %s", st[top], st[top - 2]);
+    printQuadruplet();
+    sprintf(result, "JL %d", lineNumber + 2);
+    printQuadruplet();
+    sprintf(result, "%s := %s", st[top - 2], st[top]);
+    printQuadruplet();
     top--;
     strcpy(st[top], temp);
 }
@@ -211,13 +234,12 @@ void generateMinQuadruplet()
 
 void generatePreMaxQuadruplet()
 {
-    // printQuadruplet("COMP", temp, st[top], "\0");
-    // sprintf(string, "%d", lineNumber + 2);
-    // printQuadruplet("JL", "\0", "\0", string);
-    // printQuadruplet("=", st[top], "\0", temp);
-    printf("%03d   COMP %s %s\n", lineNumber++, st[top], st[top - 2]);
-    printf("%03d   JG %d\n", lineNumber++, lineNumber + 2);
-    printf("%03d   %s := %s\n", lineNumber++, st[top - 2], st[top]);
+    sprintf(result, "COMP %s %s", st[top], st[top - 2]);
+    printQuadruplet();
+    sprintf(result, "JG %d", lineNumber + 2);
+    printQuadruplet();
+    sprintf(result, "%s := %s", st[top - 2], st[top]);
+    printQuadruplet();
     top--;
     strcpy(st[top], temp);
 }

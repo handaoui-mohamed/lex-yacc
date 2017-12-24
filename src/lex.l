@@ -9,13 +9,18 @@
     // global variables
     int cursor = 0;
 %}
-identifier [a-z](a-z]|[0-9])*
+identifier [a-z]([a-z]|[0-9])*
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
 %option yylineno
 %%
  /* start */
+"temp"[0-9]+ {
+    moveCursor();
+    yyerror("Variable name is reserved");
+}
+
 "moyenne" {
     moveCursor(); 
     return AVERAGE;

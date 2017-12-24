@@ -43,11 +43,11 @@
 %start Input
 %%
 Input:
-     | Input Line { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
+     | Input Line {}
      ;
     
 Line: EOI
-    | Expr EOI { }
+    | Expr EOI { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1; }
     ;
 
 Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
@@ -152,7 +152,6 @@ void openOutputFile(char *output){
 }
 
 int yyerror(char *s) {
-    printf("errror\n");
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
             printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);

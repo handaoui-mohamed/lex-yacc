@@ -1357,13 +1357,13 @@ yyreduce:
     {
         case 3:
 #line 46 "./src/yacc.y" /* yacc.c:1646  */
-    { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
+    {}
 #line 1362 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 50 "./src/yacc.y" /* yacc.c:1646  */
-    { }
+    { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1; }
 #line 1368 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1954,7 +1954,6 @@ void openOutputFile(char *output){
 }
 
 int yyerror(char *s) {
-    printf("errror\n");
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
             printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);
