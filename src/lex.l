@@ -9,7 +9,7 @@
     // global variables
     int cursor = 0;
 %}
-identifier [a-z]+[0-9]*
+identifier [a-z](a-z]|[0-9])*
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
