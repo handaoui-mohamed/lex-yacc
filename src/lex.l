@@ -41,6 +41,16 @@ end-of-input [\r\nEOF]
     return STANDARD_DEVIATION;
 }
 
+"min" {
+    moveCursor(); 
+    return MIN;
+}
+
+"max" {
+    moveCursor(); 
+    return MAX;
+}
+
 "," { 
     moveCursor();
     return yytext[0]; 

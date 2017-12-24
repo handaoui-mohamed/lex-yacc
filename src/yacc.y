@@ -37,12 +37,14 @@
     void generatePreVarianceQuadruplet();
     void generateDeviationQuadruplet();
     void generateMinQuadruplet();
+    void generateMaxQuadruplet();
+    void generateInitMinMaxQuadruplet();
 %}
 %union { int number; }
 
 /* Tokens */
 %token <number> IDENTIFIER EOI
-%token <number> SUM PRODUCT AVERAGE VARIANCE STANDARD_DEVIATION
+%token <number> SUM PRODUCT AVERAGE VARIANCE STANDARD_DEVIATION MIN MAX
 
 /* precedency */
 %left '-' '+'
@@ -51,7 +53,7 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr PRODUCT_List AVERAGE_List VARIANCE_List
+%type <number> Expr PRODUCT_List AVERAGE_List VARIANCE_List MIN_List MAX_List
 
 /* starting point */
 %start Input
@@ -92,6 +94,8 @@ Function: SUM '(' AVERAGE_List ')' {}
         | PRODUCT '(' PRODUCT_List ')' {}
         | VARIANCE '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); }
         | STANDARD_DEVIATION '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); generateDeviationQuadruplet($3); }
+        | MIN '(' MIN_List ')' {}
+        | MAX '(' MAX_List ')' {}
         ;
 
 AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
@@ -106,134 +110,13 @@ VARIANCE_List: VARIANCE_List { push(); } ',' {} Expr { generatePreVarianceQuadru
              | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
              ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MIN_List: MIN_List { push(); } ',' {} Expr { generateMinQuadruplet(); }
+        | Expr { generateInitMinMaxQuadruplet();}
+        ;
+
+MAX_List: MAX_List { push(); } ',' {} Expr { generateMaxQuadruplet(); }
+        | Expr { generateInitMinMaxQuadruplet();}
+        ;
 %%
 int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
@@ -421,4 +304,24 @@ void generateQuadrupletUnaryMinus(){
     printf("%03d   %s := -%s\n",lineNumber++,temp,st[top]);
     top--;
     strcpy(st[top], temp);
+}
+
+void generateInitMinMaxQuadruplet(){
+    sprintf(temp, "temp%d",tempNumber++);
+    printf("%03d   %s := %s\n",lineNumber++,temp,st[top]);
+    strcpy(st[top], temp);
+}
+
+void generateMinQuadruplet(){
+    printf("%03d   COMP %s %s\n",lineNumber++,temp,st[top]);
+    printf("%03d   JL %d\n",lineNumber++,lineNumber+2);
+    printf("%03d   %s := %s\n",lineNumber++,temp,st[top]);
+    top --;
+}
+
+void generateMaxQuadruplet(){
+    printf("%03d   COMP %s %s\n",lineNumber++,temp,st[top]);
+    printf("%03d   JG %d\n",lineNumber++,lineNumber+2);
+    printf("%03d   %s := %s\n",lineNumber++,temp,st[top]);
+    top --;
 }

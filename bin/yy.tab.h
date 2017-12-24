@@ -52,7 +52,8 @@ extern int yydebug;
     AVERAGE = 262,
     VARIANCE = 263,
     STANDARD_DEVIATION = 264,
-    unary_minus = 265
+    MIN = 265,
+    unary_minus = 266
   };
 #endif
 /* Tokens.  */
@@ -63,17 +64,18 @@ extern int yydebug;
 #define AVERAGE 262
 #define VARIANCE 263
 #define STANDARD_DEVIATION 264
-#define unary_minus 265
+#define MIN 265
+#define unary_minus 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 41 "./src/yacc.y" /* yacc.c:1909  */
+#line 42 "./src/yacc.y" /* yacc.c:1909  */
  int number; 
 
-#line 77 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 79 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
