@@ -8,6 +8,8 @@ int tempNumber = 0;
 int lineNumber = 1;
 char temp[10] = "";
 extern char *yytext;
+extern int printToFile;
+extern FILE *yyout;
 
 void help()
 {
@@ -43,6 +45,15 @@ void help()
 }
 
 /* quadrulpet generation functions */
+
+void printQuadruplet(char *codeOp, char *op1, char *op2, char *dest)
+{
+    if (printToFile)
+        fprintf(yyout, "%03d   %s,%s,%s,%s", lineNumber++, codeOp, op1, op2, dest);
+    else
+        printf("%03d   %s,%s,%s,%s", lineNumber++, codeOp, op1, op2, dest);
+}
+
 void push()
 {
     strcpy(st[++top], yytext);

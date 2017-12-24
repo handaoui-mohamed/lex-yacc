@@ -83,8 +83,13 @@
     
     // global variables
     int fileIsOpen = 0;
+    int printToFile = 0;
 
-#line 88 "./bin/yy.tab.c" /* yacc.c:339  */
+    // global functions
+    void openInputFile(char *input);
+    void openOutputFile(char *input);
+
+#line 93 "./bin/yy.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -148,10 +153,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 22 "./src/yacc.y" /* yacc.c:355  */
+#line 27 "./src/yacc.y" /* yacc.c:355  */
  int number; 
 
-#line 155 "./bin/yy.tab.c" /* yacc.c:355  */
+#line 160 "./bin/yy.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -166,7 +171,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 170 "./bin/yy.tab.c" /* yacc.c:358  */
+#line 175 "./bin/yy.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -464,12 +469,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    41,    44,    45,    48,    48,    49,    49,
-      50,    50,    51,    51,    52,    52,    53,    53,    54,    55,
-      56,    60,    61,    62,    63,    64,    65,    66,    67,    68,
-      68,    71,    72,    73,    74,    75,    76,    77,    80,    80,
-      80,    81,    84,    84,    84,    85,    88,    88,    88,    89,
-      92,    92,    92,    93,    96,    96,    96,    97
+       0,    45,    45,    46,    49,    50,    53,    53,    54,    54,
+      55,    55,    56,    56,    57,    57,    58,    58,    59,    60,
+      61,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      73,    76,    77,    78,    79,    80,    81,    82,    85,    85,
+      85,    86,    89,    89,    89,    90,    93,    93,    93,    94,
+      97,    97,    97,    98,   101,   101,   101,   102
 };
 #endif
 
@@ -1351,325 +1356,325 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 41 "./src/yacc.y" /* yacc.c:1646  */
+#line 46 "./src/yacc.y" /* yacc.c:1646  */
     { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
-#line 1357 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1362 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 45 "./src/yacc.y" /* yacc.c:1646  */
+#line 50 "./src/yacc.y" /* yacc.c:1646  */
     { }
-#line 1363 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1368 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 48 "./src/yacc.y" /* yacc.c:1646  */
+#line 53 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1369 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1374 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 48 "./src/yacc.y" /* yacc.c:1646  */
+#line 53 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1375 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1380 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 49 "./src/yacc.y" /* yacc.c:1646  */
+#line 54 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1381 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1386 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 49 "./src/yacc.y" /* yacc.c:1646  */
+#line 54 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1387 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1392 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 50 "./src/yacc.y" /* yacc.c:1646  */
+#line 55 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1393 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1398 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 50 "./src/yacc.y" /* yacc.c:1646  */
+#line 55 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1399 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1404 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 51 "./src/yacc.y" /* yacc.c:1646  */
+#line 56 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1405 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1410 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 51 "./src/yacc.y" /* yacc.c:1646  */
+#line 56 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadruplet(); }
-#line 1411 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1416 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 52 "./src/yacc.y" /* yacc.c:1646  */
+#line 57 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1417 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1422 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 52 "./src/yacc.y" /* yacc.c:1646  */
+#line 57 "./src/yacc.y" /* yacc.c:1646  */
     { generatePowQuadruplet(); }
-#line 1423 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1428 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 53 "./src/yacc.y" /* yacc.c:1646  */
+#line 58 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1429 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1434 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 53 "./src/yacc.y" /* yacc.c:1646  */
+#line 58 "./src/yacc.y" /* yacc.c:1646  */
     { generateQuadrupletUnaryMinus(); }
-#line 1435 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1440 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 54 "./src/yacc.y" /* yacc.c:1646  */
+#line 59 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1441 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1446 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 55 "./src/yacc.y" /* yacc.c:1646  */
+#line 60 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1447 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1452 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 56 "./src/yacc.y" /* yacc.c:1646  */
+#line 61 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1453 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1458 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 60 "./src/yacc.y" /* yacc.c:1646  */
+#line 65 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1459 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1464 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 61 "./src/yacc.y" /* yacc.c:1646  */
+#line 66 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1465 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1470 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 62 "./src/yacc.y" /* yacc.c:1646  */
+#line 67 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
-#line 1471 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1476 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 63 "./src/yacc.y" /* yacc.c:1646  */
+#line 68 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1477 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1482 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 64 "./src/yacc.y" /* yacc.c:1646  */
+#line 69 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1483 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1488 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 65 "./src/yacc.y" /* yacc.c:1646  */
+#line 70 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1489 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1494 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 66 "./src/yacc.y" /* yacc.c:1646  */
+#line 71 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1495 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1500 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 67 "./src/yacc.y" /* yacc.c:1646  */
+#line 72 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(EXPRESSION_EXPECTED); }
-#line 1501 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1506 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 68 "./src/yacc.y" /* yacc.c:1646  */
+#line 73 "./src/yacc.y" /* yacc.c:1646  */
     { yyerror(OPERATOR_EXPECTED); }
-#line 1507 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1512 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 71 "./src/yacc.y" /* yacc.c:1646  */
+#line 76 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1513 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1518 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 72 "./src/yacc.y" /* yacc.c:1646  */
+#line 77 "./src/yacc.y" /* yacc.c:1646  */
     { generateAverageQuadruplet((yyvsp[-1].number)); }
-#line 1519 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1524 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 73 "./src/yacc.y" /* yacc.c:1646  */
+#line 78 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1525 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1530 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 74 "./src/yacc.y" /* yacc.c:1646  */
+#line 79 "./src/yacc.y" /* yacc.c:1646  */
     { generateVarianceQuadruplet((yyvsp[-1].number)); }
-#line 1531 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1536 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 75 "./src/yacc.y" /* yacc.c:1646  */
+#line 80 "./src/yacc.y" /* yacc.c:1646  */
     { generateVarianceQuadruplet((yyvsp[-1].number)); generateDeviationQuadruplet((yyvsp[-1].number)); }
-#line 1537 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1542 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 76 "./src/yacc.y" /* yacc.c:1646  */
+#line 81 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1543 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1548 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 77 "./src/yacc.y" /* yacc.c:1646  */
+#line 82 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1549 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1554 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 80 "./src/yacc.y" /* yacc.c:1646  */
+#line 85 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1555 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1560 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 80 "./src/yacc.y" /* yacc.c:1646  */
+#line 85 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1561 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1566 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 80 "./src/yacc.y" /* yacc.c:1646  */
+#line 85 "./src/yacc.y" /* yacc.c:1646  */
     { generateSumQuadruplet(); (yyval.number)++; }
-#line 1567 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1572 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 81 "./src/yacc.y" /* yacc.c:1646  */
+#line 86 "./src/yacc.y" /* yacc.c:1646  */
     { (yyval.number) = 1;}
-#line 1573 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1578 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 84 "./src/yacc.y" /* yacc.c:1646  */
+#line 89 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1579 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1584 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 84 "./src/yacc.y" /* yacc.c:1646  */
+#line 89 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1585 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1590 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 84 "./src/yacc.y" /* yacc.c:1646  */
+#line 89 "./src/yacc.y" /* yacc.c:1646  */
     { generateProductQuadruplet(); }
-#line 1591 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1596 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 85 "./src/yacc.y" /* yacc.c:1646  */
+#line 90 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1597 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1602 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 88 "./src/yacc.y" /* yacc.c:1646  */
+#line 93 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1603 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1608 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 88 "./src/yacc.y" /* yacc.c:1646  */
+#line 93 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1609 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1614 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 88 "./src/yacc.y" /* yacc.c:1646  */
+#line 93 "./src/yacc.y" /* yacc.c:1646  */
     { generatePreVarianceQuadruplet((yyval.number)++); }
-#line 1615 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1620 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 89 "./src/yacc.y" /* yacc.c:1646  */
+#line 94 "./src/yacc.y" /* yacc.c:1646  */
     { generateInitVarianceQuadruplet(); (yyval.number) = 1; }
-#line 1621 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1626 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 92 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1627 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1632 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 92 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1633 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1638 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 92 "./src/yacc.y" /* yacc.c:1646  */
+#line 97 "./src/yacc.y" /* yacc.c:1646  */
     { generateMinQuadruplet(); }
-#line 1639 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1644 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 93 "./src/yacc.y" /* yacc.c:1646  */
+#line 98 "./src/yacc.y" /* yacc.c:1646  */
     { generateInitMinMaxQuadruplet();}
-#line 1645 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1650 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     { push(); }
-#line 1651 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1656 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     {}
-#line 1657 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1662 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 96 "./src/yacc.y" /* yacc.c:1646  */
+#line 101 "./src/yacc.y" /* yacc.c:1646  */
     { generateMaxQuadruplet(); }
-#line 1663 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1668 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 97 "./src/yacc.y" /* yacc.c:1646  */
+#line 102 "./src/yacc.y" /* yacc.c:1646  */
     { generateInitMinMaxQuadruplet();}
-#line 1669 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1674 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1673 "./bin/yy.tab.c" /* yacc.c:1646  */
+#line 1678 "./bin/yy.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1897,7 +1902,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 99 "./src/yacc.y" /* yacc.c:1906  */
+#line 104 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
@@ -1905,21 +1910,21 @@ int main(int nbInputs,char **inputs){
         exit(0);
     }
 
-    if(nbInputs == 3 && strcmp(inputs[2], "-f")){
-        yyin = NULL;
-        yyout = NULL;
-        yyin = fopen(inputs[2],"r"); 
-        yyout = fopen("output","w");
-        if(yyin) fileIsOpen = 1;
-        else {
-            printf("Error: unable to open file or file does not existe!\n");
-            exit(0);
-        }
-        if(yyout == NULL){
-            printf("Error: unable to open file or file does not existe!\n");
-            exit(0);
-        }
+    if(nbInputs > 2){
+        if (strcmp(inputs[2], "-f"))
+             openInputFile(inputs[2]);
+        else if (strcmp(inputs[2], "-o"))
+             openOutputFile(inputs[2]);
     }
+
+    if(nbInputs > 3){
+        if (strcmp(inputs[3], "-o"))
+             openOutputFile(inputs[2]);
+        else 
+            if (strcmp(inputs[2], "-f"))
+                openInputFile(inputs[2]);
+    }
+
     yyparse();
     if(fileIsOpen) {
         fclose(yyin);
@@ -1928,13 +1933,34 @@ int main(int nbInputs,char **inputs){
     return 0;
 }
 
+void openInputFile(char *input){
+    yyin = NULL;
+    yyin = fopen(input,"r"); 
+    if(yyin) fileIsOpen = 1;
+    else {
+        printf("Error: unable to open file or file does not existe!\n");
+        exit(0);
+    }
+}
+
+void openOutputFile(char *output){
+    yyout = NULL;
+    yyout = fopen(output,"w");
+    if(yyout) printToFile = 1;
+    else {
+        printf("Error: unable to open file or file does not existe!\n");
+        exit(0);
+    }
+}
+
 int yyerror(char *s) {
     printf("errror\n");
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
             printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);
         }else {
-            if(cursor-1 != 0) printf("%*c^\n",cursor-1,' '); else printf("^\n");
+            if(!printToFile && cursor-1 != 0)
+                printf("%*c^\n",cursor-1,' '); else printf("^\n");
             printf("Error: %s at position %d\n\n", s, cursor);
         }
         exit(0);
