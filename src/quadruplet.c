@@ -63,8 +63,8 @@ void push()
 void generateSumQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printQuadruplet("+", st[top - 2], st[top], temp);
-    // printf("%03d   %s := %s + %s\n", lineNumber++, temp, st[top - 2], st[top]);
+    // printQuadruplet("+", st[top - 2], st[top], temp);
+    printf("%03d   %s := %s + %s\n", lineNumber++, temp, st[top - 2], st[top]);
     top -= 2;
     strcpy(st[top], temp);
 }
@@ -72,8 +72,8 @@ void generateSumQuadruplet()
 void generateProductQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    printQuadruplet("*", st[top - 2], st[top], temp);
-    // printf("%03d   %s := %s * %s\n", lineNumber++, temp, st[top - 2], st[top]);
+    // printQuadruplet("*", st[top - 2], st[top], temp);
+    printf("%03d   %s := %s * %s\n", lineNumber++, temp, st[top - 2], st[top]);
     top -= 2;
     strcpy(st[top], temp);
 }
