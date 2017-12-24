@@ -36,7 +36,7 @@ end-of-input [\r\nEOF]
     return VARIANCE;
 }
 
-"ecart-type" {
+"ec" {
     moveCursor(); 
     return STANDARD_DEVIATION;
 }

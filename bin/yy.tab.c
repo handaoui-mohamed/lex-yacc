@@ -1905,7 +1905,7 @@ void help()
     printf("\t5- max.\n");
 }
 
-
+/* quadrulpet generation functions */
 void push(){
     strcpy(st[++top],yytext);
 }
@@ -1969,7 +1969,23 @@ void generateVarianceQuadruplet(int size){
 }
 
 void generateDeviationQuadruplet(){
-    printf("%03d   %s := CALL SQRT %s ????\n",lineNumber++,temp,temp);
+    printf("racine\n");
+    char temp1[10] = ""; 
+    sprintf(temp1, "temp%d",tempNumber++); // n
+    char temp2[10] = ""; 
+    sprintf(temp, "temp%d",tempNumber++); //sqt
+    sprintf(temp2, "temp%d",tempNumber++); // temp
+    printf("%03d   %s := %s / 2\n",lineNumber++,temp,temp1);
+    printf("%03d   %s := 0\n",lineNumber++,temp2);
+    printf("%03d   COMP %s %s\n",lineNumber++,temp,temp2); // while
+    printf("%03d   JE GOTO %d\n",lineNumber++,lineNumber+6);
+    printf("%03d   %s := %s\n",lineNumber++,temp2,temp);
+    printf("%03d   %s := %s / %s\n",lineNumber++,temp,temp1,temp2);
+    printf("%03d   %s := %s + %s\n",lineNumber++,temp,temp,temp2);
+    printf("%03d   %s := %s / 2\n",lineNumber++,temp,temp);
+    printf("%03d   JMP GOTO %d\n",lineNumber++,lineNumber-6);
+    strcpy(st[top], temp);
+    
 }
 
 void generateQuadruplet(){
