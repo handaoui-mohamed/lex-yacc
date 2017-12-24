@@ -1343,7 +1343,7 @@ yyreduce:
     {
         case 3:
 #line 59 "./src/yacc.y" /* yacc.c:1646  */
-    { cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
+    { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
 #line 1348 "./bin/yy.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1828,7 +1828,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 107 "./src/yacc.y" /* yacc.c:1906  */
+#line 236 "./src/yacc.y" /* yacc.c:1906  */
 
 int main(int nbInputs,char **inputs){       
     if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
@@ -1983,7 +1983,10 @@ void generatePowQuadruplet(){
     int saveTempNumber = tempNumber;
     sprintf(temp, "temp%d",tempNumber++);
     printf("%03d   %s := %s\n",lineNumber++,temp,st[top]);
+    printf("%03d   JNZ %s GOTO %d\n",lineNumber++,temp,lineNumber+3);
     sprintf(temp, "temp%d",tempNumber++);
+    printf("%03d   %s := 1\n",lineNumber++,temp);
+    printf("%03d   JMP GOTO %d \n",lineNumber++,lineNumber+4);
     printf("%03d   %s := %s * %s\n",lineNumber++,temp,temp,st[top-2]);
     sprintf(temp, "temp%d",saveTempNumber);
     printf("%03d   %s := %s - 1\n",lineNumber++,temp,temp);

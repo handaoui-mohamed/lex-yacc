@@ -56,7 +56,7 @@
 %start Input
 %%
 Input:
-     | Input Line { cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
+     | Input Line { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1;}
      ;
     
 Line: EOI
@@ -387,7 +387,10 @@ void generatePowQuadruplet(){
     int saveTempNumber = tempNumber;
     sprintf(temp, "temp%d",tempNumber++);
     printf("%03d   %s := %s\n",lineNumber++,temp,st[top]);
+    printf("%03d   JNZ %s GOTO %d\n",lineNumber++,temp,lineNumber+3);
     sprintf(temp, "temp%d",tempNumber++);
+    printf("%03d   %s := 1\n",lineNumber++,temp);
+    printf("%03d   JMP GOTO %d \n",lineNumber++,lineNumber+4);
     printf("%03d   %s := %s * %s\n",lineNumber++,temp,temp,st[top-2]);
     sprintf(temp, "temp%d",saveTempNumber);
     printf("%03d   %s := %s - 1\n",lineNumber++,temp,temp);
