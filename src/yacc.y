@@ -45,12 +45,12 @@
 %start Input
 %%
 Input:
-     | Input Line {}
+     | Input Line {  cursor = 0; tempNumber = 0; lineNumber = 1;  }
      | EXIT { closeFiles(); }
      ;
     
-Line: EOI { }
-    | Expr EOI { sprintf(result,"END\n"); printQuadruplet(); cursor = 0; tempNumber = 0; lineNumber = 1; }
+Line: EOI
+    | Expr EOI { sprintf(result,"END\n"); printQuadruplet(); }
     ;
 
 Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }

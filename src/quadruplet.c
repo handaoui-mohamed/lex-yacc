@@ -55,7 +55,7 @@ void printQuadruplet()
     {
         fprintf(yyout, "%03d   %s\n", lineNumber++, result);
     }
-    printf("%03d   %s\n", lineNumber++, result);
+    printf("%03d   %s\n", lineNumber - 1, result);
 }
 
 void push()
