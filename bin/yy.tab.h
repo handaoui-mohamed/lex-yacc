@@ -47,37 +47,39 @@ extern int yydebug;
   {
     IDENTIFIER = 258,
     EOI = 259,
-    SUM = 260,
-    PRODUCT = 261,
-    AVERAGE = 262,
-    VARIANCE = 263,
-    STANDARD_DEVIATION = 264,
-    MIN = 265,
-    MAX = 266,
-    unary_minus = 267
+    EXIT = 260,
+    SUM = 261,
+    PRODUCT = 262,
+    AVERAGE = 263,
+    VARIANCE = 264,
+    STANDARD_DEVIATION = 265,
+    MIN = 266,
+    MAX = 267,
+    unary_minus = 268
   };
 #endif
 /* Tokens.  */
 #define IDENTIFIER 258
 #define EOI 259
-#define SUM 260
-#define PRODUCT 261
-#define AVERAGE 262
-#define VARIANCE 263
-#define STANDARD_DEVIATION 264
-#define MIN 265
-#define MAX 266
-#define unary_minus 267
+#define EXIT 260
+#define SUM 261
+#define PRODUCT 262
+#define AVERAGE 263
+#define VARIANCE 264
+#define STANDARD_DEVIATION 265
+#define MIN 266
+#define MAX 267
+#define unary_minus 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 27 "./src/yacc.y" /* yacc.c:1909  */
+#line 29 "./src/yacc.y" /* yacc.c:1909  */
  int number; 
 
-#line 81 "./bin/yy.tab.h" /* yacc.c:1909  */
+#line 83 "./bin/yy.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

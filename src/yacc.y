@@ -15,6 +15,7 @@
     extern FILE *yyout;
     extern int lineNumber;
     extern int tempNumber;
+    extern char result[100];
     
     // global variables
     int fileIsOpen = 0;
@@ -23,11 +24,12 @@
     // global functions
     void openInputFile(char *input);
     void openOutputFile(char *input);
+    void closeFiles();
 %}
 %union { int number; }
 
 /* Tokens */
-%token <number> IDENTIFIER EOI
+%token <number> IDENTIFIER EOI EXIT
 %token <number> SUM PRODUCT AVERAGE VARIANCE STANDARD_DEVIATION MIN MAX
 
 /* precedency */
@@ -44,10 +46,11 @@
 %%
 Input:
      | Input Line {}
+     | EXIT { closeFiles(); }
      ;
     
-Line: EOI
-    | Expr EOI { printf("%03d   END\n",lineNumber++); cursor = 0; tempNumber = 0; printf("\n"); lineNumber = 1; }
+Line: EOI { }
+    | Expr EOI { sprintf(result,"END\n"); printQuadruplet(); cursor = 0; tempNumber = 0; lineNumber = 1; }
     ;
 
 Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
@@ -102,33 +105,41 @@ MAX_List: MAX_List { push(); } ',' {} Expr { generatePreMaxQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
         ;
 %%
-int main(int nbInputs,char **inputs){       
-    if(nbInputs == 2 && (strcmp(inputs[1], "-h") || strcmp(inputs[1], "--help"))){
+int main(int nbInputs,char **inputs){
+    if(nbInputs == 2 && (!strcmp(inputs[1], "-h") || !strcmp(inputs[1], "--help"))){
         help();
         exit(0);
     }
 
-    if(nbInputs > 2){
-        if (strcmp(inputs[2], "-f"))
-             openInputFile(inputs[2]);
-        else if (strcmp(inputs[2], "-o"))
-             openOutputFile(inputs[2]);
+    if(nbInputs > 2){ 
+        if (!strcmp(inputs[1], "-f")){
+            openInputFile(inputs[2]);
+        }
+        else if (!strcmp(inputs[1], "-o")){
+            openOutputFile(inputs[2]);
+        }
+        
     }
 
     if(nbInputs > 3){
-        if (strcmp(inputs[3], "-o"))
-             openOutputFile(inputs[2]);
-        else 
-            if (strcmp(inputs[2], "-f"))
-                openInputFile(inputs[2]);
+        if (!strcmp(inputs[3], "-o")){
+             openOutputFile(inputs[4]);
+        }
+        else if (!strcmp(inputs[3], "-f")){
+            openInputFile(inputs[4]);
+        }
     }
 
     yyparse();
-    if(fileIsOpen) {
-        fclose(yyin);
-        fclose(yyout);
-    }
+    closeFiles();
     return 0;
+}
+
+void closeFiles(){
+    if(yyin != NULL && fileIsOpen) 
+        fclose(yyin);
+    if(yyout != NULL && printToFile)
+        fclose(yyout);
 }
 
 void openInputFile(char *input){
@@ -146,7 +157,7 @@ void openOutputFile(char *output){
     yyout = fopen(output,"w");
     if(yyout) printToFile = 1;
     else {
-        printf("Error: unable to open file or file does not existe!\n");
+        printf("Error: unable to open or create file!\n");
         exit(0);
     }
 }

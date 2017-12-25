@@ -1,5 +1,6 @@
 void help();
 void push();
+void printQuadruplet();
 void generateQuadruplet();
 void generateQuadrupletUnaryMinus();
 void generatePowQuadruplet();

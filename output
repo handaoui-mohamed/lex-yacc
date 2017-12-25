@@ -1,0 +1,37 @@
+001   temp0 := s + v
+003   temp1 := q + c
+005   temp2 := temp0 + temp1
+007   temp3 := temp2 + x
+009   temp4 := t + n
+011   temp5 := temp4 / 2
+013   temp6 := temp3 + temp5
+015   temp7 := temp6 / 5
+017   END
+
+001   temp0 := d + e
+003   temp1 := temp0 + f
+005   temp2 := c + temp1
+007   temp3 := y + h
+009   temp4 := temp3 / 2
+011   temp5 := temp2 + temp4
+013   temp6 := b * temp5
+015   temp7 := a + temp6
+017   END
+
+001   temp0 := a * a
+003   temp1 := a
+005   temp2 := c * c
+007   temp1 := temp1 + c
+009   temp0 := temp0 + temp2
+011   temp2 := v * v
+013   temp1 := temp1 + v
+015   temp0 := temp0 + temp2
+017   temp2 := b * b
+019   temp1 := temp1 + b
+021   temp0 := temp0 + temp2
+023   temp0 := temp0 / 4
+025   temp1 := temp1 / 4
+027   temp1 := temp1 * temp1
+029   temp1 := temp1 - temp0
+031   END
+

@@ -50,9 +50,10 @@ void help()
 void printQuadruplet()
 {
     if (printToFile)
+    {
         fprintf(yyout, "%03d   %s\n", lineNumber++, result);
-    else
-        printf("%03d   %s\n", lineNumber++, result);
+    }
+    printf("%03d   %s\n", lineNumber++, result);
 }
 
 void push()

@@ -16,6 +16,10 @@ end-of-input [\r\nEOF]
 %option yylineno
 %%
  /* start */
+"exit" {
+    return EXIT;
+}
+
 "temp"[0-9]+ {
     moveCursor();
     yyerror("Variable name is reserved");
