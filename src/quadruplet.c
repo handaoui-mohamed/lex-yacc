@@ -31,18 +31,20 @@ void help()
     printf("   | |  | |__) | | |   | |  | | \\  / | |__) || | | |      | (___   | | | |     \n");
     printf("   | |  |  ___/  | |   | |  | | |\\/| |  ___/ | | | |       \\___ \\  | | | |     \n");
     printf("   | |  | |      | |___| |__| | |  | | |    _| |_| |____   ____) |_| |_| |____ \n");
-    printf("   |_|  |_|       \\_____\\____/|_|  |_|_|   |_____|______| |_____/|_____|______|\n\n\n");
+    printf("   |_|  |_|       \\_____\\____/|_|  |_|_|   |_____|______| |_____/|_____|______|\n\n");
 
-    printf("Pour analyser un fichier ajouter -f <filename>\n");
-    printf("Pour analyser les entrées cmd, exécutez sans paramètre\n");
+    printf("Pour analyser les entrées cmd, exécutez sans paramètre :\n\t ./prog\n");
+    printf("Pour analyser un fichier :\n\t ./prog -f <filename>\n");
+    printf("Pour enregister le resultat d'analyse dans un fichier :\n\t ./prog -o <filename>\n");
     printf("Fonctions disponibles : \n");
-    printf("\t1- somme.\n");
-    printf("\t2- produit.\n");
-    printf("\t3- moyenne.\n");
-    printf("\t4- variance.\n");
-    printf("\t5- ecart-type.\n");
-    printf("\t5- min.\n");
-    printf("\t5- max.\n");
+    printf("\t1- operations arithmetique.\n");
+    printf("\t2- somme.\n");
+    printf("\t3- produit.\n");
+    printf("\t4- moyenne.\n");
+    printf("\t5- variance.\n");
+    printf("\t6- ecart-type.\n");
+    printf("\t7- min.\n");
+    printf("\t8- max.\n");
 }
 
 /* quadrulpet generation functions */
