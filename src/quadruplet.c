@@ -54,7 +54,7 @@ void printQuadruplets()
     int i;
     for (i = 1; i <= lineNumber; i++)
     {
-        fprintf(yyout, "%s", quadStack[i]);
+        fprintf(yyout, "%s\n", quadStack[i]);
     }
     fprintf(yyout, "%03d   END\n\n", lineNumber);
     lineNumber = 1;
@@ -64,8 +64,13 @@ void printQuadruplets()
 void generateQuadruplet()
 {
     char quadrulpet[100] = "";
-    sprintf(quadrulpet, "%03d   %s\n", lineNumber++, result);
+    sprintf(quadrulpet, "%03d   %s", lineNumber++, result);
     strcpy(quadStack[lineNumber], quadrulpet);
+}
+
+void setJumpAddress(int quadNumber, int address)
+{
+    sprintf(quadStack[quadNumber], "%s %d", quadStack[quadNumber], address);
 }
 
 void push()
@@ -160,7 +165,7 @@ void generateDeviationQuadruplet()
     generateQuadruplet();
     sprintf(result, "COMP %s %s", temp, temp2); // while
     generateQuadruplet();
-    sprintf(result, "JE GOTO %d", lineNumber + 6);
+    sprintf(result, "JE %d", lineNumber + 6);
     generateQuadruplet();
     sprintf(result, "%s := %s", temp2, temp);
     generateQuadruplet();
@@ -170,7 +175,7 @@ void generateDeviationQuadruplet()
     generateQuadruplet();
     sprintf(result, "%s := %s / 2", temp, temp);
     generateQuadruplet();
-    sprintf(result, "JMP GOTO %d", lineNumber - 6);
+    sprintf(result, "JMP %d", lineNumber - 6);
     generateQuadruplet();
     strcpy(stack[top], temp);
 }
@@ -261,4 +266,42 @@ void generateMaxQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber - 2);
     strcpy(stack[top - 1], temp);
+}
+
+void generateTempQuadruplet()
+{
+    char quadrulpet[100] = "";
+    sprintf(quadrulpet, "%s", stack[top]);
+    strcpy(quadStack[++lineNumber], quadrulpet);
+    sprintf(result, "JMP");
+    generateQuadruplet();
+}
+
+void generateTestQuadruplet()
+{
+    sprintf(result, "CMP %s %s", stack[top - 2], stack[top]);
+    generateQuadruplet();
+    switch (stack[top - 1][0])
+    {
+    case '<':
+        sprintf(result, "JGE");
+        break;
+    case '>':
+        sprintf(result, "JLE");
+        break;
+    case '=':
+        sprintf(result, "JNE");
+        break;
+    }
+    generateQuadruplet();
+}
+
+void generateIfQuadruplet(int testAddress, int exprAddress)
+{
+    setJumpAddress(testAddress, exprAddress);
+    setJumpAddress(exprAddress, lineNumber);
+    char quadrulpet[100] = "";
+    sprintf(quadrulpet, "%03d   %s = %s", exprAddress, stack[top], quadStack[exprAddress - 1]);
+    strcpy(quadStack[exprAddress - 1], quadrulpet);
+    sprintf(result, "JMP");
 }

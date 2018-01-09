@@ -17,3 +17,6 @@ void generateMinQuadruplet();
 void generatePreMaxQuadruplet();
 void generateMaxQuadruplet();
 void generateInitMinMaxQuadruplet();
+void generateTestQuadruplet();
+void generateTempQuadruplet();
+void generateIfQuadruplet(int testAddress, int exprAddress);

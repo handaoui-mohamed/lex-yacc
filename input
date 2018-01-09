@@ -1,3 +1,8 @@
+si(a<b;d+v;r-moyenne(t,n))+a/w
+++
+si(a>b;d+v;r-t)
+si(a<b;d+v;r-moyenne(t,n))
+si(a=b;d+somme(q,c);r-t)
 moyenne(s,v,somme(q,c),x,moyenne(t,n))
 a + b * somme(c, somme(d,e,f),moyenne(y,h))
 variance(a,c,v,b)

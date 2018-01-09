@@ -14,7 +14,6 @@
     extern FILE *yyin;
     extern FILE *yyout;
     extern int lineNumber;
-    extern int tempNumber;
     extern char result[100];
     
     // global variables
@@ -29,7 +28,7 @@
 %union { int number; }
 
 /* Tokens */
-%token <number> IDENTIFIER EOI EXIT
+%token <number> IDENTIFIER IF EOI EXIT
 %token <number> SUM PRODUCT AVERAGE VARIANCE STANDARD_DEVIATION MIN MAX
 
 /* precedency */
@@ -39,7 +38,7 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr PRODUCT_List SUM_List VARIANCE_List MIN_List MAX_List
+%type <number> Expr Test PRODUCT_List SUM_List VARIANCE_List MIN_List MAX_List
 
 /* starting point */
 %start Input
@@ -62,6 +61,7 @@ Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
     | '(' Expr ')' {}
     | IDENTIFIER { push(); }
     | Function {}
+    | IF '(' Test { $3 = lineNumber; } ';' Expr { generateTempQuadruplet(); $6 = lineNumber; } ';' Expr ')' { generateIfQuadruplet($3, $6); }
 
 
     // /* errors handling */
@@ -74,6 +74,11 @@ Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
     | Expr error '/' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error '^' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
+    ;
+
+Test: Expr '<' { push(); } Expr { generateTestQuadruplet(); }
+    | Expr '>' { push(); } Expr { generateTestQuadruplet(); }
+    | Expr '=' { push(); } Expr { generateTestQuadruplet(); }
     ;
 
 Function: SUM '(' SUM_List ')'

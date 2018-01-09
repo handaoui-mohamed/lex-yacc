@@ -6,9 +6,11 @@
     int cursor = 0;
 %}
 identifier [a-z]([a-z]|[0-9])*
+cmp [<>=]
 spaces [ \t]+
 operator [\+\-*/^]
 end-of-input [\r\nEOF]
+parenthesis ["("|")"]
 %option yylineno
 %%
 . { cursor++; REJECT; }
@@ -33,7 +35,11 @@ end-of-input [\r\nEOF]
 
 "max" return MAX;
 
-"," return yytext[0];
+"si" return IF;
+
+","|";" return yytext[0];
+
+{cmp} return yytext[0]; 
  /* END: functions */
 
 {identifier} return IDENTIFIER;
@@ -42,8 +48,7 @@ end-of-input [\r\nEOF]
 {spaces}+ {}
 
  /* handling parenthesis */
-"("|")" return yytext[0]; 
-
+{parenthesis} return yytext[0]; 
 
 {end-of-input} return EOI;
 
