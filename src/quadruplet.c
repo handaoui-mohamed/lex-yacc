@@ -55,7 +55,9 @@ void printQuadruplet()
     {
         fprintf(yyout, "%03d   %s\n", lineNumber++, result);
     }
-    printf("%03d   %s\n", lineNumber - 1, result);
+    // printf("%03d   %s\n", lineNumber - 1, result);
+    else
+        printf("%03d   %s\n", lineNumber++, result);
 }
 
 void push()
@@ -180,19 +182,19 @@ void generatePowQuadruplet()
     sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := %s", temp, st[top]);
     printQuadruplet();
-    sprintf(result, "JNZ %s GOTO %d", temp, lineNumber + 3);
+    sprintf(result, "JNZ %d", lineNumber + 3);
     printQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := 1", temp);
     printQuadruplet();
-    sprintf(result, "JMP GOTO %d ", lineNumber + 4);
+    sprintf(result, "JMP %d ", lineNumber + 4);
     printQuadruplet();
     sprintf(result, "%s := %s * %s", temp, temp, st[top - 2]);
     printQuadruplet();
     sprintf(temp, "temp%d", saveTempNumber);
     sprintf(result, "%s := %s - 1", temp, temp);
     printQuadruplet();
-    sprintf(result, "JNZ %s GOTO %d", temp, lineNumber - 2);
+    sprintf(result, "JNZ %d", lineNumber - 2);
     printQuadruplet();
     top -= 2;
     sprintf(temp, "temp%d", tempNumber - 1);
