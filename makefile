@@ -9,14 +9,13 @@ yacc: error.strings.h
 	bison -o ./bin/yy.tab.c -dy ./src/yacc.y
 
 prog: lex yacc quadruplets
-	gcc -o prog ./bin/quadruplet.c ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly
+	gcc -o prog ./bin/quadruplet.o ./bin/yy.tab.c ./bin/lex.yy.c -lm -ll -ly -I./src
 
 error.strings.h:
 	cp ./src/error.strings.h ./bin/error.strings.h
 
 quadruplets:
-	cp ./src/quadruplet.h ./bin/quadruplet.h
-	cp ./src/quadruplet.c ./bin/quadruplet.c
+	gcc -c ./src/quadruplet.c -o ./bin/quadruplet.o
 
 clean-binaries:
 	touch ./bin/temp
