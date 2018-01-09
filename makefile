@@ -1,4 +1,4 @@
-default: clean-binaries prog clear-screen
+default: all clear-screen
 
 all: clean-binaries prog
 
