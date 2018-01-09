@@ -10,7 +10,6 @@ int lineNumber = 1;
 char temp[10] = "";
 char result[100] = "";
 extern char *yytext;
-extern int printToFile;
 extern FILE *yyout;
 
 void help()
