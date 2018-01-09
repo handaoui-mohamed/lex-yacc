@@ -39,24 +39,24 @@
 %right unary_minus
 
 /* Types definitions */
-%type <number> Expr PRODUCT_List AVERAGE_List VARIANCE_List MIN_List MAX_List
+%type <number> Expr PRODUCT_List SUM_List VARIANCE_List MIN_List MAX_List
 
 /* starting point */
 %start Input
 %%
 Input:
-     | Input Line {  cursor = 0; tempNumber = 0; lineNumber = 1;  }
+     | Input Line {  cursor = 0; }
      | EXIT { closeFiles(); }
      ;
     
 Line: EOI
-    | Expr EOI { sprintf(result,"END\n"); printQuadruplet(); }
+    | Expr EOI { printQuadruplets(); }
     ;
 
-Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
-    | Expr '+' { push(); } Expr { generateQuadruplet(); }
-    | Expr '/' { push(); } Expr { generateQuadruplet(); }
-    | Expr '*' { push(); } Expr { generateQuadruplet(); }
+Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
+    | Expr '+' { push(); } Expr { generateArithmeticQuadruplet(); }
+    | Expr '/' { push(); } Expr { generateArithmeticQuadruplet(); }
+    | Expr '*' { push(); } Expr { generateArithmeticQuadruplet(); }
     | Expr '^' { push(); } Expr { generatePowQuadruplet(); }
     | '-' { push(); } Expr %prec unary_minus { generateQuadrupletUnaryMinus(); }
     | '(' Expr ')' {}
@@ -76,32 +76,32 @@ Expr: Expr '-' { push(); } Expr { generateQuadruplet(); }
     | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
     ;
 
-Function: SUM '(' AVERAGE_List ')' {}
-        | AVERAGE '(' AVERAGE_List ')' { generateAverageQuadruplet($3); } 
-        | PRODUCT '(' PRODUCT_List ')' {}
+Function: SUM '(' SUM_List ')'
+        | AVERAGE '(' SUM_List ')' { generateAverageQuadruplet($3); } 
+        | PRODUCT '(' PRODUCT_List ')'
         | VARIANCE '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); }
         | STANDARD_DEVIATION '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); generateDeviationQuadruplet($3); }
         | MIN '(' MIN_List ')' { generateMinQuadruplet(); }
         | MAX '(' MAX_List ')' { generateMaxQuadruplet(); }
         ;
 
-AVERAGE_List: AVERAGE_List { push(); } ',' {} Expr { generateSumQuadruplet(); $$++; } 
+SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
             | Expr { $$ = 1;}
             ;
 
-PRODUCT_List: PRODUCT_List { push(); } ',' {} Expr { generateProductQuadruplet(); }
+PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
             | Expr {}
             ;
 
-VARIANCE_List: VARIANCE_List { push(); } ',' {} Expr { generatePreVarianceQuadruplet($$++); }
+VARIANCE_List: VARIANCE_List { push(); } ',' Expr { generatePreVarianceQuadruplet($$++); }
              | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
              ;
 
-MIN_List: MIN_List { push(); } ',' {} Expr { generatePreMinQuadruplet(); }
+MIN_List: MIN_List { push(); } ',' Expr { generatePreMinQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
         ;
 
-MAX_List: MAX_List { push(); } ',' {} Expr { generatePreMaxQuadruplet(); }
+MAX_List: MAX_List { push(); } ',' Expr { generatePreMaxQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
         ;
 %%

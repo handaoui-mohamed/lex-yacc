@@ -1,6 +1,6 @@
 default: clean-binaries prog clear-screen
 
-all: clean-binaries yacc lex prog
+all: clean-binaries prog
 
 lex:
 	flex -o ./bin/lex.yy.c ./src/lex.l

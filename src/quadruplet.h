@@ -1,7 +1,8 @@
 void help();
 void push();
-void printQuadruplet();
+void printQuadruplets();
 void generateQuadruplet();
+void generateArithmeticQuadruplet();
 void generateQuadrupletUnaryMinus();
 void generatePowQuadruplet();
 void generateSumQuadruplet();

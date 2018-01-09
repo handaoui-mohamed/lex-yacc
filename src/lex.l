@@ -3,10 +3,6 @@
     #include <stdlib.h>
     #include "yy.tab.h"
 
-    // global functions
-    void moveCursor();
-
-    // global variables
     int cursor = 0;
 %}
 identifier [a-z]([a-z]|[0-9])*
@@ -15,90 +11,43 @@ operator [\+\-*/^]
 end-of-input [\r\nEOF]
 %option yylineno
 %%
+. { cursor++; REJECT; }
+
  /* start */
-"exit" {
-    return EXIT;
-}
+"exit" return EXIT;
 
-"temp"[0-9]+ {
-    moveCursor();
-    yyerror("Variable name is reserved");
-}
+"temp"[0-9]+ { yyerror("Variable name is reserved"); }
 
-"moyenne" {
-    moveCursor(); 
-    return AVERAGE;
-}
+ /* START: functions */
+"moyenne" return AVERAGE;
 
-"somme" {
-    moveCursor(); 
-    return SUM;
-}
+"somme" return SUM;
 
-"produit" {
-    moveCursor(); 
-    return PRODUCT;
-}
+"produit" return PRODUCT;
 
-"variance" {
-    moveCursor(); 
-    return VARIANCE;
-}
+"variance" return VARIANCE;
 
-"ecart-type" {
-    moveCursor(); 
-    return STANDARD_DEVIATION;
-}
+"ecart-type" return STANDARD_DEVIATION;
 
-"min" {
-    moveCursor(); 
-    return MIN;
-}
+"min" return MIN;
 
-"max" {
-    moveCursor(); 
-    return MAX;
-}
+"max" return MAX;
 
-"," { 
-    moveCursor();
-    return yytext[0]; 
-}
+"," return yytext[0];
+ /* END: functions */
 
-{identifier} {
-    moveCursor();
-    return IDENTIFIER;
-}
-
+{identifier} return IDENTIFIER;
 
  /* escaping spaces */
-{spaces}+ { 
-    moveCursor(); 
-}
+{spaces}+ {}
 
  /* handling parenthesis */
-"("|")" { 
-    moveCursor();
-    return yytext[0]; 
-}
+"("|")" return yytext[0]; 
 
 
-{end-of-input} { 
-    moveCursor();
-    return EOI;
-}
+{end-of-input} return EOI;
 
-{operator} {
-    moveCursor(); 
-    return yytext[0]; 
-}
+{operator} return yytext[0]; 
 
-. { 
-    moveCursor();
-    yyerror("Unexpected character");
-}
+. yyerror("Unexpected character");
 %%
-
-void moveCursor(){
-    cursor += yyleng;
-}

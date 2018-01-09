@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-char st[100][10];
+char stack[100][10];
+char quadStack[100][100];
 int top = 0;
 int tempNumber = 0;
 int lineNumber = 1;
@@ -49,56 +50,64 @@ void help()
 
 /* quadrulpet generation functions */
 
-void printQuadruplet()
+void printQuadruplets()
 {
-    if (printToFile)
+    int i;
+    for (i = 1; i <= lineNumber; i++)
     {
-        fprintf(yyout, "%03d   %s\n", lineNumber++, result);
+        fprintf(yyout, "%s", quadStack[i]);
     }
-    // printf("%03d   %s\n", lineNumber - 1, result);
-    else
-        printf("%03d   %s\n", lineNumber++, result);
+    fprintf(yyout, "%03d   END\n\n", lineNumber);
+    lineNumber = 1;
+    tempNumber = 0;
+}
+
+void generateQuadruplet()
+{
+    char quadrulpet[100] = "";
+    sprintf(quadrulpet, "%03d   %s\n", lineNumber++, result);
+    strcpy(quadStack[lineNumber], quadrulpet);
 }
 
 void push()
 {
-    strcpy(st[++top], yytext);
+    strcpy(stack[++top], yytext);
 }
 
 void generateSumQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s + %s", temp, st[top - 2], st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s + %s", temp, stack[top - 2], stack[top]);
+    generateQuadruplet();
     top -= 2;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateProductQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s * %s", temp, st[top - 2], st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s * %s", temp, stack[top - 2], stack[top]);
+    generateQuadruplet();
     top -= 2;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateAverageQuadruplet(int size)
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s / %d", temp, st[top], size);
-    printQuadruplet();
-    strcpy(st[top], temp);
+    sprintf(result, "%s := %s / %d", temp, stack[top], size);
+    generateQuadruplet();
+    strcpy(stack[top], temp);
 }
 
 void generateInitVarianceQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s * %s", temp, st[top], st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s * %s", temp, stack[top], stack[top]);
+    generateQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s", temp, st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s", temp, stack[top]);
+    generateQuadruplet();
     top--;
 }
 
@@ -106,15 +115,15 @@ void generatePreVarianceQuadruplet(int size)
 {
     tempNumber++;
     sprintf(temp, "temp%d", tempNumber - size);
-    sprintf(result, "%s := %s * %s", temp, st[top], st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s * %s", temp, stack[top], stack[top]);
+    generateQuadruplet();
     char prevTemp[10] = "";
     sprintf(prevTemp, "temp%d", tempNumber - (size + 1));
-    sprintf(result, "%s := %s + %s", prevTemp, prevTemp, st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s + %s", prevTemp, prevTemp, stack[top]);
+    generateQuadruplet();
     sprintf(prevTemp, "temp%d", tempNumber - (size + 2));
     sprintf(result, "%s := %s + %s", prevTemp, prevTemp, temp);
-    printQuadruplet();
+    generateQuadruplet();
     top--;
 }
 
@@ -123,20 +132,20 @@ void generateVarianceQuadruplet(int size)
     char prevTemp[10] = "";
     sprintf(prevTemp, "temp%d", tempNumber - size - 1);
     sprintf(result, "%s := %s / %d", prevTemp, prevTemp, size);
-    printQuadruplet();
+    generateQuadruplet();
     char prevTemp2[10] = "";
     sprintf(prevTemp2, "temp%d", tempNumber - size);
     sprintf(result, "%s := %s / %d", prevTemp2, prevTemp2, size);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := %s * %s", prevTemp2, prevTemp2, prevTemp2);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := %s - %s", prevTemp2, prevTemp2, prevTemp);
-    printQuadruplet();
+    generateQuadruplet();
     tempNumber -= size + 1;
     sprintf(temp, "temp%d", tempNumber);
     top -= size - 2;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateDeviationQuadruplet()
@@ -147,110 +156,110 @@ void generateDeviationQuadruplet()
     sprintf(temp, "temp%d", tempNumber++);  //sqt
     sprintf(temp2, "temp%d", tempNumber++); // temp
     sprintf(result, "%s := %s / 2", temp, temp1);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := 0", temp2);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "COMP %s %s", temp, temp2); // while
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "JE GOTO %d", lineNumber + 6);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := %s", temp2, temp);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := %s / %s", temp, temp1, temp2);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := %s + %s", temp, temp, temp2);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "%s := %s / 2", temp, temp);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "JMP GOTO %d", lineNumber - 6);
-    printQuadruplet();
-    strcpy(st[top], temp);
+    generateQuadruplet();
+    strcpy(stack[top], temp);
 }
 
-void generateQuadruplet()
+void generateArithmeticQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s %s %s", temp, st[top - 2], st[top - 1], st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s %s %s", temp, stack[top - 2], stack[top - 1], stack[top]);
+    generateQuadruplet();
     top -= 2;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generatePowQuadruplet()
 {
     int saveTempNumber = tempNumber;
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s", temp, st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s", temp, stack[top]);
+    generateQuadruplet();
     sprintf(result, "JNZ %d", lineNumber + 3);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := 1", temp);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "JMP %d ", lineNumber + 4);
-    printQuadruplet();
-    sprintf(result, "%s := %s * %s", temp, temp, st[top - 2]);
-    printQuadruplet();
+    generateQuadruplet();
+    sprintf(result, "%s := %s * %s", temp, temp, stack[top - 2]);
+    generateQuadruplet();
     sprintf(temp, "temp%d", saveTempNumber);
     sprintf(result, "%s := %s - 1", temp, temp);
-    printQuadruplet();
+    generateQuadruplet();
     sprintf(result, "JNZ %d", lineNumber - 2);
-    printQuadruplet();
+    generateQuadruplet();
     top -= 2;
     sprintf(temp, "temp%d", tempNumber - 1);
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateQuadrupletUnaryMinus()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := -%s", temp, st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := -%s", temp, stack[top]);
+    generateQuadruplet();
     top--;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateInitMinMaxQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s", temp, st[top]);
-    printQuadruplet();
+    sprintf(result, "%s := %s", temp, stack[top]);
+    generateQuadruplet();
     top--;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generatePreMinQuadruplet()
 {
-    sprintf(result, "COMP %s %s", st[top], st[top - 2]);
-    printQuadruplet();
+    sprintf(result, "COMP %s %s", stack[top], stack[top - 2]);
+    generateQuadruplet();
     sprintf(result, "JL %d", lineNumber + 2);
-    printQuadruplet();
-    sprintf(result, "%s := %s", st[top - 2], st[top]);
-    printQuadruplet();
+    generateQuadruplet();
+    sprintf(result, "%s := %s", stack[top - 2], stack[top]);
+    generateQuadruplet();
     top--;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateMinQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber - 2);
-    strcpy(st[top - 1], temp);
+    strcpy(stack[top - 1], temp);
 }
 
 void generatePreMaxQuadruplet()
 {
-    sprintf(result, "COMP %s %s", st[top], st[top - 2]);
-    printQuadruplet();
+    sprintf(result, "COMP %s %s", stack[top], stack[top - 2]);
+    generateQuadruplet();
     sprintf(result, "JG %d", lineNumber + 2);
-    printQuadruplet();
-    sprintf(result, "%s := %s", st[top - 2], st[top]);
-    printQuadruplet();
+    generateQuadruplet();
+    sprintf(result, "%s := %s", stack[top - 2], stack[top]);
+    generateQuadruplet();
     top--;
-    strcpy(st[top], temp);
+    strcpy(stack[top], temp);
 }
 
 void generateMaxQuadruplet()
 {
     sprintf(temp, "temp%d", tempNumber - 2);
-    strcpy(st[top - 1], temp);
+    strcpy(stack[top - 1], temp);
 }
