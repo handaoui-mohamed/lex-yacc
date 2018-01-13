@@ -1,3 +1,11 @@
+min(a,b
+min(a,b,
+min
+si(a+b;e;t)
+si(a<<b;e;t)
+si(a<b,e,t)
+si(a>b;;t)
+si(a+b;e;t)
 min(a,b,c)
 max(a,b,c)
 somme(a,b)

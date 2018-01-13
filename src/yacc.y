@@ -74,12 +74,16 @@ Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
     | Expr error '*' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error '/' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error '^' { yyerror(EXPRESSION_EXPECTED); }
+    | IF '(' Expr error { yyerror(TEST_EXPECTED); }
     | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
     ;
 
 Test: Expr '<' { push(); } Expr { generateTestQuadruplet(); }
     | Expr '>' { push(); } Expr { generateTestQuadruplet(); }
     | Expr '=' { push(); } Expr { generateTestQuadruplet(); }
+    | Expr '<' error { yyerror(EXPRESSION_EXPECTED); }
+    | Expr '>' error { yyerror(EXPRESSION_EXPECTED); }
+    | Expr '=' error { yyerror(EXPRESSION_EXPECTED); }
     ;
 
 Function: SUM '(' SUM_List ')'
@@ -90,28 +94,56 @@ Function: SUM '(' SUM_List ')'
         | MIN '(' MIN_List ')' { generateMinQuadruplet(); }
         | MAX '(' MAX_List ')' { generateMaxQuadruplet(); }
 
+
         // /* errors handling */
+        | MIN { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | MAX { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | STANDARD_DEVIATION { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | VARIANCE { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | PRODUCT { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | AVERAGE { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | SUM { yyerror(FUNCTION_OPENING_PARENTHESIS_EXPECTED); } error
+        | Expr error { yyerror(CLOSING_PARENTHESIS_EXPECTED); }
         ;
 
 SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
         | Expr { $$ = 1;}
+
+
+        // /* errors handling */
         | error { yyerror(EXPRESSION_EXPECTED); }
         ;
 
 PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
             | Expr {}
+
+
+            // /* errors handling */
+            | error { yyerror(EXPRESSION_EXPECTED); }
             ;
 
 VARIANCE_List: VARIANCE_List { push(); } ',' Expr { generatePreVarianceQuadruplet($$++); }
              | Expr { generateInitVarianceQuadruplet(); $$ = 1; }
+
+
+             // /* errors handling */
+             | error { yyerror(EXPRESSION_EXPECTED); }
              ;
 
 MIN_List: MIN_List { push(); } ',' Expr { generatePreMinQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
+
+
+        // /* errors handling */
+        | error { yyerror(EXPRESSION_EXPECTED); }
         ;
 
 MAX_List: MAX_List { push(); } ',' Expr { generatePreMaxQuadruplet(); }
         | Expr { generateInitMinMaxQuadruplet();}
+
+
+        // /* errors handling */
+        | error { yyerror(EXPRESSION_EXPECTED); }
         ;
 %%
 int main(int nbInputs,char **inputs){
@@ -174,7 +206,7 @@ void openOutputFile(char *output){
 int yyerror(char *s) {
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
-            printf("*** %s ...\n%*c^\n",line,cursor+3,' ');
+            printf("*** %s\n%*c^\n",line,cursor+3,' ');
             printf("Error: %s on line %d at position %d\n\n", s, yylineno, cursor);
         }else {
             if(cursor-1 != 0) printf("%*c^\n",cursor-1,' '); else printf("^\n");
