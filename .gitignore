@@ -1,5 +1,3 @@
 bin/*
 !bin/.gitkeep
-input
-output
 prog

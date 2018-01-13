@@ -239,7 +239,7 @@ void generatePreMinQuadruplet()
     sprintf(result, "%s := %s", stack[top - 2], stack[top]);
     generateQuadruplet();
     top--;
-    strcpy(stack[top], temp);
+    strcpy(stack[top], stack[top - 1]);
 }
 
 void generateMinQuadruplet()
@@ -257,7 +257,7 @@ void generatePreMaxQuadruplet()
     sprintf(result, "%s := %s", stack[top - 2], stack[top]);
     generateQuadruplet();
     top--;
-    strcpy(stack[top], temp);
+    strcpy(stack[top], stack[top - 1]);
 }
 
 void generateMaxQuadruplet()
