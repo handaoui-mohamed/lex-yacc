@@ -8,4 +8,3 @@ const char *FUNCTION_OPENING_PARENTHESIS_EXPECTED = {"Opening parenthesis expect
 const char *FUNCTION_PARAMS_EXPECTED = {"Expression expected after function opening parenthesis"};
 const char *OPERATOR_EXPECTED = {"Operator expected after expression"};
 const char *TEST_EXPECTED = {"Test expected after expression"};
-const char *SEMI_COLUM_EXPECTED = {"Somi coliodoc expected after expression"};

@@ -7,11 +7,12 @@
     int cursor = 0;
     char line[255] = "";
     void moveCursor();
+    extern int yyerror(char *s);
 %}
 identifier [a-z]([a-z]|[0-9])*
 cmp [<>=]
 spaces [ \t]+
-operator [\+\-*/^]
+operator [\+\-\*\/^]
 end-of-input [\r\nEOF]
 parenthesis ["("|")"]
 %option yylineno
@@ -55,7 +56,7 @@ parenthesis ["("|")"]
 
 {operator} moveCursor(); return yytext[0]; 
 
-.  moveCursor(); yyerror("Unexpected character");
+.  {moveCursor(); yyerror("Unexpected character");};
 %%
 
 void moveCursor(){

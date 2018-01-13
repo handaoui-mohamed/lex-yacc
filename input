@@ -1,3 +1,20 @@
+a+min(q,g,min(e,b),y)/t
+a+max(q,g,max(e,b),y)/t
+a+max(q,g,min(e,b),y)/t
+a+min(q,g,max(e,b),y)/t
+**
+a+min(q,g)/t
+somme(a,b,c,d)
+produit(a,b,c,d)
+somme(a,b,moyenne(d,g),t)+f
+produit(a,b,moyenne(d,g),t)+f+r
+**
+min(a,b,c)
+max(a,b,c)
+min(a,b,moyenne(d,+g+),t)
+min(a,b,moyenne(d,g),t)+f
+max(a,b,moyenne(d,g),t)+f
+// errors
 min(a,b
 min(a,b,
 min
@@ -6,9 +23,3 @@ si(a<<b;e;t)
 si(a<b,e,t)
 si(a>b;;t)
 si(a+b;e;t)
-min(a,b,c)
-max(a,b,c)
-somme(a,b)
-min(a,b,moyenne(d,+g+),t)
-min(a,b,moyenne(d,g),t)+f
-max(a,b,moyenne(d,g),t)+f

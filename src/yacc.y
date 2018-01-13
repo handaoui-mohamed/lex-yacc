@@ -15,6 +15,7 @@
     extern FILE *yyin;
     extern FILE *yyout;
     extern int lineNumber;
+    extern int tempNumber;
     extern char result[100];
     
     // global variables
@@ -74,6 +75,11 @@ Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
     | Expr error '*' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error '/' { yyerror(EXPRESSION_EXPECTED); }
     | Expr error '^' { yyerror(EXPRESSION_EXPECTED); }
+    | error '+' { yyerror(EXPRESSION_EXPECTED); }
+    | error '-' { yyerror(EXPRESSION_EXPECTED); }
+    | error '*' { yyerror(EXPRESSION_EXPECTED); }
+    | error '/' { yyerror(EXPRESSION_EXPECTED); }
+    | error '^' { yyerror(EXPRESSION_EXPECTED); }
     | IF '(' Expr error { yyerror(TEST_EXPECTED); }
     | Expr error { yyerror(OPERATOR_EXPECTED); } Expr
     ;
@@ -107,7 +113,7 @@ Function: SUM '(' SUM_List ')'
         ;
 
 SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
-        | Expr { $$ = 1;}
+        | Expr { $$ = 1; tempNumber++;}
 
 
         // /* errors handling */
@@ -115,7 +121,7 @@ SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; }
         ;
 
 PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
-            | Expr {}
+            | Expr {tempNumber++;}
 
 
             // /* errors handling */
@@ -181,6 +187,7 @@ void closeFiles(){
         fclose(yyin);
     if(yyout != NULL && printToFile)
         fclose(yyout);
+    exit(0);
 }
 
 void openInputFile(char *input){
