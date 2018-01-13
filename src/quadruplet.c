@@ -63,9 +63,7 @@ void printQuadruplets()
 
 void generateQuadruplet()
 {
-    char quadrulpet[100] = "";
-    sprintf(quadrulpet, "%03d   %s", lineNumber++, result);
-    strcpy(quadStack[lineNumber], quadrulpet);
+    sprintf(quadStack[lineNumber], "%03d   %s", lineNumber++, result);
 }
 
 void setJumpAddress(int quadNumber, int address)
