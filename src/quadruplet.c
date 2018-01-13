@@ -40,13 +40,14 @@ void help()
     printf("Pour enregister le resultat d'analyse dans un fichier :\n\t ./prog -o <filename>\n");
     printf("Fonctions disponibles : \n");
     printf("\t1- operations arithmetique.\n");
-    printf("\t2- somme.\n");
-    printf("\t3- produit.\n");
-    printf("\t4- moyenne.\n");
-    printf("\t5- variance.\n");
-    printf("\t6- ecart-type.\n");
-    printf("\t7- min.\n");
-    printf("\t8- max.\n");
+    printf("\t2- somme(expr1, expr2, expr3, ...).\n");
+    printf("\t3- produit(expr1, expr2, expr3, ...).\n");
+    printf("\t4- moyenne(expr1, expr2, expr3, ...).\n");
+    printf("\t5- variance(expr1, expr2, expr3, ...).\n");
+    printf("\t6- ecart-type(expr1, expr2, expr3, ...).\n");
+    printf("\t7- min(expr1, expr2, expr3, ...).\n");
+    printf("\t8- max(expr1, expr2, expr3, ...).\n");
+    printf("\t9- si(test, expr1, expr2).\n");
 }
 
 /* quadrulpet generation functions */
@@ -186,7 +187,7 @@ void generateDeviationQuadruplet()
 
 void generateArithmeticQuadruplet()
 {
-    sprintf(temp, "temp%d", tempNumber);
+    sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := %s %s %s", temp, stack[top - 2], stack[top - 1], stack[top]);
     generateQuadruplet();
     top -= 2;
