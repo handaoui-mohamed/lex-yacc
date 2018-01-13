@@ -1,5 +1,6 @@
 min(a,b,c)
 max(a,b,c)
-min(a,b,moyenne(d,g+),t)
+somme(a,b)
+min(a,b,moyenne(d,+g+),t)
 min(a,b,moyenne(d,g),t)+f
 max(a,b,moyenne(d,g),t)+f

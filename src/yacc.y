@@ -89,11 +89,14 @@ Function: SUM '(' SUM_List ')'
         | STANDARD_DEVIATION '(' VARIANCE_List ')' { generateVarianceQuadruplet($3); generateDeviationQuadruplet($3); }
         | MIN '(' MIN_List ')' { generateMinQuadruplet(); }
         | MAX '(' MAX_List ')' { generateMaxQuadruplet(); }
+
+        // /* errors handling */
         ;
 
 SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
-            | Expr { $$ = 1;}
-            ;
+        | Expr { $$ = 1;}
+        | error { yyerror(EXPRESSION_EXPECTED); }
+        ;
 
 PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
             | Expr {}
@@ -171,11 +174,10 @@ void openOutputFile(char *output){
 int yyerror(char *s) {
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
-            printf("%s\n%*c^\n",line,cursor-1,' ');
+            printf("*** %s ...\n%*c^\n",line,cursor+3,' ');
             printf("Error: %s on line %d at position %d\n\n", s, yylineno, cursor);
         }else {
-            if(!printToFile && cursor-1 != 0)
-                printf("%*c^\n",cursor-1,' '); else printf("^\n");
+            if(cursor-1 != 0) printf("%*c^\n",cursor-1,' '); else printf("^\n");
             printf("Error: %s at position %d\n\n", s, cursor);
         }
         exit(0);

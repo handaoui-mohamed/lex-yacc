@@ -6,6 +6,7 @@
 
     int cursor = 0;
     char line[255] = "";
+    void moveCursor();
 %}
 identifier [a-z]([a-z]|[0-9])*
 cmp [<>=]
@@ -15,46 +16,49 @@ end-of-input [\r\nEOF]
 parenthesis ["("|")"]
 %option yylineno
 %%
-. { sprintf(line, "%s%s", line,yytext); cursor++; REJECT; }
-
  /* start */
-"exit" return EXIT;
+"exit" moveCursor(); return EXIT;
 
-"temp"[0-9]+ { yyerror("Variable name is reserved"); }
+"temp"[0-9]+ { moveCursor(); yyerror("Variable name is reserved"); }
 
  /* START: functions */
-"moyenne" return AVERAGE;
+"moyenne" moveCursor(); return AVERAGE;
 
-"somme" return SUM;
+"somme" moveCursor(); return SUM;
 
-"produit" return PRODUCT;
+"produit" moveCursor(); return PRODUCT;
 
-"variance" return VARIANCE;
+"variance" moveCursor(); return VARIANCE;
 
-"ecart-type" return STANDARD_DEVIATION;
+"ecart-type" moveCursor(); return STANDARD_DEVIATION;
 
-"min" return MIN;
+"min" moveCursor(); return MIN;
 
-"max" return MAX;
+"max" moveCursor(); return MAX;
 
-"si" return IF;
+"si" moveCursor(); return IF;
 
-","|";" return yytext[0];
+","|";" moveCursor(); return yytext[0];
 
-{cmp} return yytext[0]; 
+{cmp} moveCursor(); return yytext[0]; 
  /* END: functions */
 
-{identifier} return IDENTIFIER;
+{identifier} moveCursor(); return IDENTIFIER;
 
  /* escaping spaces */
-{spaces}+ {}
+{spaces}+ { moveCursor(); }
 
  /* handling parenthesis */
-{parenthesis} return yytext[0]; 
+{parenthesis} moveCursor(); return yytext[0]; 
 
-{end-of-input} return EOI;
+{end-of-input} moveCursor(); return EOI;
 
-{operator} return yytext[0]; 
+{operator} moveCursor(); return yytext[0]; 
 
-. yyerror("Unexpected character");
+.  moveCursor(); yyerror("Unexpected character");
 %%
+
+void moveCursor(){
+    sprintf(line, "%s%s", line,yytext); 
+    cursor += yyleng;
+}
