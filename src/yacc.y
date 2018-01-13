@@ -9,6 +9,7 @@
 
     // extern functions
     extern int cursor;
+    extern char line[255];
     extern char* yytext;
     extern int yylineno;
     extern FILE *yyin;
@@ -44,7 +45,7 @@
 %start Input
 %%
 Input:
-     | Input Line {  cursor = 0; }
+     | Input Line {  cursor = 0; strcpy(line,""); }
      | EXIT { closeFiles(); }
      ;
     
@@ -170,7 +171,8 @@ void openOutputFile(char *output){
 int yyerror(char *s) {
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
-            printf("\nError: %s on line %d at position %d\n\n", s, yylineno, cursor);
+            printf("%s\n%*c^\n",line,cursor-1,' ');
+            printf("Error: %s on line %d at position %d\n\n", s, yylineno, cursor);
         }else {
             if(!printToFile && cursor-1 != 0)
                 printf("%*c^\n",cursor-1,' '); else printf("^\n");

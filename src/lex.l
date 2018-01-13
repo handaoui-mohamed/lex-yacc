@@ -1,9 +1,11 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
     #include "yy.tab.h"
 
     int cursor = 0;
+    char line[255] = "";
 %}
 identifier [a-z]([a-z]|[0-9])*
 cmp [<>=]
@@ -13,7 +15,7 @@ end-of-input [\r\nEOF]
 parenthesis ["("|")"]
 %option yylineno
 %%
-. { cursor++; REJECT; }
+. { sprintf(line, "%s%s", line,yytext); cursor++; REJECT; }
 
  /* start */
 "exit" return EXIT;
