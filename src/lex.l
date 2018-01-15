@@ -56,7 +56,7 @@ parenthesis ["("|")"]
 
 {operator} moveCursor(); return yytext[0]; 
 
-.  {moveCursor(); yyerror("Unexpected character");};
+.  {moveCursor(); yyerror("Caractère inattendu");};
 %%
 
 void moveCursor(){

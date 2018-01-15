@@ -85,7 +85,7 @@ void push()
 
 void generateSumQuadruplet()
 {
-    sprintf(temp, "temp%d", tempNumber);
+    sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := %s + %s", temp, stack[top - 2], stack[top]);
     generateQuadruplet();
     top -= 2;
@@ -94,7 +94,7 @@ void generateSumQuadruplet()
 
 void generateProductQuadruplet()
 {
-    sprintf(temp, "temp%d", tempNumber);
+    sprintf(temp, "temp%d", tempNumber++);
     sprintf(result, "%s := %s * %s", temp, stack[top - 2], stack[top]);
     generateQuadruplet();
     top -= 2;
@@ -310,4 +310,6 @@ void generateIfQuadruplet(int testAddress, int exprAddress)
     sprintf(quadrulpet, "%03d   %s = %s", exprAddress, stack[top], quadStack[exprAddress - 1]);
     strcpy(quadStack[exprAddress - 1], quadrulpet);
     sprintf(result, "JMP");
+    top -= 4;
+    strcpy(stack[top], temp);
 }

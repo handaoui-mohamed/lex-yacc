@@ -51,6 +51,7 @@ Input:
      ;
     
 Line: EOI
+    | EXIT { closeFiles(); }
     | Expr EOI { printQuadruplets(); }
     ;
 
@@ -87,9 +88,6 @@ Expr: Expr '-' { push(); } Expr { generateArithmeticQuadruplet(); }
 Test: Expr '<' { push(); } Expr { generateTestQuadruplet(); }
     | Expr '>' { push(); } Expr { generateTestQuadruplet(); }
     | Expr '=' { push(); } Expr { generateTestQuadruplet(); }
-    | Expr '<' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '>' error { yyerror(EXPRESSION_EXPECTED); }
-    | Expr '=' error { yyerror(EXPRESSION_EXPECTED); }
     ;
 
 Function: SUM '(' SUM_List ')'
@@ -113,7 +111,7 @@ Function: SUM '(' SUM_List ')'
         ;
 
 SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; } 
-        | Expr { $$ = 1; tempNumber++;}
+        | Expr { $$ = 1;}
 
 
         // /* errors handling */
@@ -121,7 +119,7 @@ SUM_List: SUM_List { push(); } ',' Expr { generateSumQuadruplet(); $$++; }
         ;
 
 PRODUCT_List: PRODUCT_List { push(); } ',' Expr { generateProductQuadruplet(); }
-            | Expr {tempNumber++;}
+            | Expr {}
 
 
             // /* errors handling */
@@ -214,10 +212,10 @@ int yyerror(char *s) {
     if(strcmp(s,"syntax error")<-1){
         if(fileIsOpen){
             printf("*** %s\n%*c^\n",line,cursor+3,' ');
-            printf("Error: %s on line %d at position %d\n\n", s, yylineno, cursor);
+            printf("Erreur: %s dans la ligne %d à la position %d\n\n", s, yylineno, cursor);
         }else {
             if(cursor-1 != 0) printf("%*c^\n",cursor-1,' '); else printf("^\n");
-            printf("Error: %s at position %d\n\n", s, cursor);
+            printf("Erreur: %s à la position %d\n\n", s, cursor);
         }
         exit(0);
     }
