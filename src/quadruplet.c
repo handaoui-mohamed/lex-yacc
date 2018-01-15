@@ -170,7 +170,7 @@ void generateDeviationQuadruplet()
     generateQuadruplet();
     sprintf(result, "COMP %s %s", temp, temp2); // while
     generateQuadruplet();
-    sprintf(result, "JE %d", lineNumber + 6);
+    sprintf(result, "JE %d", lineNumber + 7);
     generateQuadruplet();
     sprintf(result, "%s := %s", temp2, temp);
     generateQuadruplet();
@@ -180,7 +180,7 @@ void generateDeviationQuadruplet()
     generateQuadruplet();
     sprintf(result, "%s := %s / 2", temp, temp);
     generateQuadruplet();
-    sprintf(result, "JMP %d", lineNumber - 6);
+    sprintf(result, "JMP %d", lineNumber - 5);
     generateQuadruplet();
     strcpy(stack[top], temp);
 }
