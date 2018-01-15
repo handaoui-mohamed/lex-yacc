@@ -64,7 +64,7 @@ void printQuadruplets()
         fprintf(yyout, "%03d   %s\n", i, quadStack[i]);
     }
     fprintf(yyout, "%03d   END\n\n", lineNumber + 1);
-    lineNumber = 1;
+    lineNumber = 0;
     tempNumber = 0;
 }
 
@@ -277,9 +277,7 @@ void generateMaxQuadruplet()
 void generateTempQuadruplet()
 {
     lineNumber++;
-    printf("here : %s\n", stack[top]);
     sprintf(quadStack[lineNumber], "%s", stack[top]);
-    printf("herep : %s\n", quadStack[lineNumber]);
     sprintf(result, "JMP");
     generateQuadruplet();
     // top--;
@@ -310,11 +308,32 @@ void generateTestQuadruplet()
 void generateIfQuadruplet(int testAddress, int exprAddress)
 {
     setJumpAddress(testAddress, exprAddress + 1);
-    setJumpAddress(exprAddress, lineNumber + 1);
+    if (strstr(stack[top], "temp") == NULL)
+    {
+        setJumpAddress(exprAddress, lineNumber + 2);
+        sprintf(temp, "temp%d", tempNumber++);
+        sprintf(result, "%s := %s", temp, stack[top]);
+        generateQuadruplet();
+        strcpy(stack[top], temp);
+    }
+    else
+    {
+        setJumpAddress(exprAddress, lineNumber + 1);
+    }
+
     char quadrulpet[100] = "";
     sprintf(quadrulpet, "%s = %s", stack[top], quadStack[exprAddress - 1]);
     strcpy(quadStack[exprAddress - 1], quadrulpet);
     sprintf(result, "JMP");
+
+    // if (strcmp(quadStack[exprAddress - 1], "temp") < -1)
+    // {
+    //     sprintf(quadStack[exprAddress], "%s := %s", temp, quadStack[exprAddress]);
+    // }
+    // else
+    // {
+    //     sprintf(quadStack[exprAddress - 1], "%s = %s", stack[top], quadStack[exprAddress - 1]);
+    // }
     top -= 2;
     strcpy(stack[top], temp);
 }
