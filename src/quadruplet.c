@@ -63,6 +63,10 @@ void printQuadruplets()
     {
         fprintf(yyout, "%03d   %s\n", i, quadStack[i]);
     }
+    if (lineNumber == 0 && strstr(stack[top], "temp") == NULL)
+    {
+        fprintf(yyout, "%03d   temp0 = %s\n", ++lineNumber, stack[top]);
+    }
     fprintf(yyout, "%03d   END\n\n", lineNumber + 1);
     lineNumber = 0;
     tempNumber = 0;
@@ -230,11 +234,14 @@ void generateQuadrupletUnaryMinus()
 
 void generateInitMinMaxQuadruplet()
 {
-    sprintf(temp, "temp%d", tempNumber++);
-    sprintf(result, "%s := %s", temp, stack[top]);
-    generateQuadruplet();
-    // top--;
-    strcpy(stack[top], temp);
+    if (strstr(stack[top], "temp") == NULL)
+    {
+        sprintf(temp, "temp%d", tempNumber++);
+        sprintf(result, "%s := %s", temp, stack[top]);
+        generateQuadruplet();
+        // top--;
+        strcpy(stack[top], temp);
+    }
 }
 
 void generatePreMinQuadruplet()
