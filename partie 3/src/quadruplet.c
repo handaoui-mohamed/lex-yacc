@@ -248,7 +248,7 @@ void generatePreMinQuadruplet()
 {
     sprintf(result, "COMP %s %s", stack[top], stack[top - 2]);
     generateQuadruplet();
-    sprintf(result, "JL %d", lineNumber + 3);
+    sprintf(result, "JG %d", lineNumber + 3);
     generateQuadruplet();
     sprintf(result, "%s := %s", stack[top - 2], stack[top]);
     generateQuadruplet();
@@ -266,7 +266,7 @@ void generatePreMaxQuadruplet()
 {
     sprintf(result, "COMP %s %s", stack[top], stack[top - 2]);
     generateQuadruplet();
-    sprintf(result, "JG %d", lineNumber + 3);
+    sprintf(result, "JL %d", lineNumber + 3);
     generateQuadruplet();
     sprintf(result, "%s := %s", stack[top - 2], stack[top]);
     generateQuadruplet();

@@ -9,7 +9,7 @@
     void moveCursor();
     extern int yyerror(char *s);
 %}
-identifier [a-z]([a-z]|[0-9])*
+identifier [a-z0-9]+
 cmp [<>=]
 spaces [ \t]+
 operator [\+\-\*\/^]

@@ -1,0 +1,2 @@
+a + b * somme(c, somme(d,e,f), variance(a,b, c,d,e))
+5 * 2 +variance(a,variance(b,c,max(d,e)),f)-4*g
